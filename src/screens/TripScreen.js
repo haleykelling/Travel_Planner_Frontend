@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Trip from '../components/Trip';
+import { Ionicons } from '@expo/vector-icons';
 
 const tripsUrl = 'http://localhost:3000/trips'
 
@@ -19,15 +21,13 @@ const TripScreen = ({navigation}) => {
             <FlatList 
                 style={styles.listStyle}
                 data={trips}
-                renderItem={({item}) => {
-                    return (
-                        <TouchableOpacity onPress={() => navigation.navigate('Itinerary', {trip: item})}>
-                            <Text style={styles.textStyle}>{item.name}</Text>
-                        </TouchableOpacity>
-                    )
-                }}
+                renderItem={({item}) => <Trip trip={item} navigation={navigation}/>}
                 keyExtractor={(trip) => trip.id}
             />
+            <TouchableOpacity style={styles.buttonStyle}>
+                <Text style={styles.textStyle}>Add a New Trip</Text>
+                <Ionicons style={styles.iconStyle} name="ios-add-circle-outline"  />
+            </TouchableOpacity>
         </View>
     );
 }
@@ -39,12 +39,23 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     textStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        marginLeft: 30
+    },
+    buttonStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         backgroundColor: 'hsl(240, 83%, 93%)',
-        opacity: 0.8,
         marginVertical: 15,
         marginHorizontal: 30,
-        padding: 30,
-        fontSize: 20
+        height: 85
+    },
+    iconStyle: {
+        fontSize: 30,
+        color: 'black',
+        marginTop: 27,
+        marginRight: 30
     }
 })
 

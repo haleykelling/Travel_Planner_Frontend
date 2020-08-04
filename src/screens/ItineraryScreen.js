@@ -3,8 +3,7 @@ import { Text, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-
 
 const ItineraryScreen = ({route, navigation}) => {
     const {trip} = route.params
-    console.log(trip)
-    console.log(trip.days)
+    
     return (
         <FlatList 
             data={trip.days}
