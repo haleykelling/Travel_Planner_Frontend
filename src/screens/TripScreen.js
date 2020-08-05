@@ -9,7 +9,7 @@ const tripsUrl = 'http://localhost:3000/trips'
 
 const TripScreen = ({navigation}) => {
     
-    const [trips, setTrips] = useState({})
+    const [trips, setTrips] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     useEffect(() => {
@@ -29,7 +29,10 @@ const TripScreen = ({navigation}) => {
             body: JSON.stringify({trip: trip})
         })
             .then(response => response.json())
-            .then(result => setTrips({...trips, result}))
+            .then(result => {
+                setTrips([...trips, result])
+                console.log(result)
+            })
     }
 
     return (

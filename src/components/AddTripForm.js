@@ -1,12 +1,31 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const AddTripForm = ({toggleModal, addTrip}) => {
     
+    const [showStartDate, setShowStartDate] = useState(false)
+    const [showEndDate, setShowEndDate] = useState(false)
     const [name, setName] = useState('')
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
     const [numberOfDays, setNumberOfDays] = useState(null)
+
+    const toggleShowStartDate = () => setShowEndDate(!showEndDate)
+    const toggleShowEndDate = () => setShowStartDate(!showStartDate)
+
+
+    const onChangeStart = (event, selectedDate) => {
+        const currentDate = selectedDate || startDate
+        setStartDate(currentDate)
+        toggleShowStartDate()
+    }
+
+    const onChangeEnd = (event, selectedDate) => {
+        const currentDate = selectedDate || endDate
+        setEndDate(currentDate)
+        toggleShowEndDate()
+    }
     
     const handleSubmit = () => {
         toggleModal()
@@ -19,9 +38,9 @@ const AddTripForm = ({toggleModal, addTrip}) => {
 
         addTrip(formData)
         setName('')
-        setStartDate('')
-        setEndDate('')
-        setNumberOfDays('')
+        setStartDate(new Date())
+        setEndDate(new Date())
+        setNumberOfDays(null)
     }
 
     return (
@@ -33,18 +52,30 @@ const AddTripForm = ({toggleModal, addTrip}) => {
                 value={name}
                 onChangeText={setName}
                 />
-            <TextInput 
-                style={styles.inputStyle} 
-                placeholder="Start Date"
+            <TouchableOpacity onPress={toggleShowStartDate}>
+                <Text >Choose Start Date</Text>
+            </TouchableOpacity>
+            {showStartDate && (
+                <DateTimePicker
+                testID="dateTimePicker"
                 value={startDate}
-                onChangeText={setStartDate}
+                mode='date'
+                display="default"
+                onChange={onChangeStart}
                 />
-            <TextInput 
-                style={styles.inputStyle} 
-                placeholder="End Date"
+            )}
+            <TouchableOpacity onPress={toggleShowEndDate}>
+                <Text >Choose End Date</Text>
+            </TouchableOpacity>
+            {showEndDate && (
+                <DateTimePicker
+                testID="dateTimePicker"
                 value={endDate}
-                onChangeText={setEndDate}
+                mode='date'
+                display="default"
+                onChange={onChangeEnd}
                 />
+            )}
             <Text style={styles.textStyle}>OR</Text>
             <TextInput 
                 style={styles.inputStyle} 
