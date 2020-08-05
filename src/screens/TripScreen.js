@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import Trip from '../components/Trip';
 import AddTripForm from '../components/AddTripForm';
@@ -20,14 +20,26 @@ const TripScreen = ({navigation}) => {
 
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 
+    const addTrip = (trip) => {
+        fetch(tripsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({trip: trip})
+        })
+            .then(response => response.json())
+            .then(result => setTrips({...trips, result}))
+    }
+
     return (
-        <View>
+        <ScrollView>
             <Text style={styles.headingStyle}>Upcoming Trips</Text>
             <FlatList 
                 style={styles.listStyle}
                 data={trips}
                 renderItem={({item}) => <Trip trip={item} navigation={navigation}/>}
-                keyExtractor={(trip) => trip.id}
+                keyExtractor={(trip) => trip.id.toString()}
             />
             <TouchableOpacity style={styles.buttonStyle} onPress={toggleModal}>
                 <Text style={styles.textStyle}>Add a New Trip</Text>
@@ -36,14 +48,11 @@ const TripScreen = ({navigation}) => {
             <Modal 
                 isVisible={isModalVisible}
                 backdropColor='white'
-                backdropOpacity={0.8}
+                backdropOpacity={0.9}
             >
-                <AddTripForm />
-                <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
-                    <Text style={styles.closeText}>Close Form</Text>
-                </TouchableOpacity>
+                <AddTripForm addTrip={addTrip} toggleModal={toggleModal}/>
             </Modal>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -77,18 +86,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center', 
     },
-    closeButton: {
-        backgroundColor: 'hsl(278, 48%, 32%)',
-        marginVertical: 15,
-        marginHorizontal: 120,
-        padding: 10,
-        borderRadius: 20,
-    },
-    closeText: {
-        color: 'white',
-        alignSelf: 'center',
-        fontSize: 20
-    }
 })
 
 export default TripScreen;
