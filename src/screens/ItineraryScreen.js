@@ -7,6 +7,7 @@ const ItineraryScreen = ({route, navigation}) => {
     return (
         <FlatList 
             data={trip.days}
+            keyExtractor={(day) => day.id.toString()}
             renderItem={({item}) => {
                 return (
                     <>

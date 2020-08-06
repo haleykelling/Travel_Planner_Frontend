@@ -8,8 +8,9 @@ import { Ionicons } from '@expo/vector-icons';
 const tripsUrl = 'http://localhost:3000/trips'
 
 const TripScreen = ({navigation}) => {
-    
+
     const [trips, setTrips] = useState([])
+    const [alerts, setAlerts] = useState('')
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     useEffect(() => {
@@ -28,34 +29,66 @@ const TripScreen = ({navigation}) => {
             },
             body: JSON.stringify({trip: trip})
         })
-            .then(response => response.json())
-            .then(result => {
-                setTrips([...trips, result])
-                console.log(result)
-            })
+        .then(response => {
+            if (!response.ok){
+                return response.json().then(parsedResponse => {
+                    setAlerts(parsedResponse.error)
+                })
+            } else {
+                setAlerts('')
+                return response.json()
+                .then(result => {
+                    toggleModal()
+                    setTrips([...trips, result])
+                })
+            }
+        })  
+    }
+
+    const editTrip = (id) => {
+
+    }
+    
+    const deleteTrip = (id) => {
+        const new_trips = trips.filter(trip => trip.id !== id)
+        setTrips(new_trips)
+        
+        fetch(`${tripsUrl}/${id}`, {method: 'DELETE'})
     }
 
     return (
-        <ScrollView>
+        <>
             <Text style={styles.headingStyle}>Upcoming Trips</Text>
             <FlatList 
                 style={styles.listStyle}
                 data={trips}
-                renderItem={({item}) => <Trip trip={item} navigation={navigation}/>}
+                renderItem={({item}) => {
+                    return <Trip 
+                        trip={item} 
+                        navigation={navigation}
+                        editTrip={editTrip}
+                        deleteTrip={deleteTrip}
+                    />
+                }}
                 keyExtractor={(trip) => trip.id.toString()}
             />
             <TouchableOpacity style={styles.buttonStyle} onPress={toggleModal}>
                 <Text style={styles.textStyle}>Add a New Trip</Text>
-                <Ionicons style={styles.iconStyle} name="ios-add-circle-outline"  />
+                <Ionicons style={styles.iconStyle} name="ios-add"  />
             </TouchableOpacity>
             <Modal 
                 isVisible={isModalVisible}
                 backdropColor='white'
                 backdropOpacity={0.9}
             >
-                <AddTripForm addTrip={addTrip} toggleModal={toggleModal}/>
+                <AddTripForm 
+                    addTrip={addTrip} 
+                    toggleModal={toggleModal} 
+                    alerts={alerts}
+                    setAlerts={setAlerts}
+                />
             </Modal>
-        </ScrollView>
+        </>
     );
 }
 
@@ -66,21 +99,22 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     textStyle: {
-        fontSize: 20,
+        fontSize: 22,
         alignSelf: 'center',
-        marginLeft: 30
+        marginLeft: 30,
+        color: 'white'
     },
     buttonStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: 'hsl(240, 83%, 93%)',
+        backgroundColor: 'hsl(278, 48%, 18%)',
         marginVertical: 15,
         marginHorizontal: 30,
         height: 85
     },
     iconStyle: {
         fontSize: 30,
-        color: 'black',
+        color: 'white',
         marginTop: 27,
         marginRight: 30
     },
