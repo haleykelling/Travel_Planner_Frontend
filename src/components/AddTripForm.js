@@ -15,11 +15,13 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
 
 
     const onChangeStart = (event, selectedDate) => {
+        console.log(selectedDate)
         setStartDate(selectedDate)
         setEndDate(selectedDate)
     }
     
     const onChangeEnd = (event, selectedDate) => {
+        console.log(selectedDate)
         setEndDate(selectedDate)
     }
     
@@ -29,7 +31,7 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             start_date: startDate,
             end_date: endDate
         }
-        
+        console.log(formData)
         addTrip(formData)
         setName('')
         setStartDate(new Date())
@@ -55,6 +57,7 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             </TouchableOpacity>
             {showStartDate && (
                 <DateTimePicker
+                utcOffset={0}
                 value={startDate}
                 minimumDate={new Date()}
                 mode='date'
@@ -68,6 +71,7 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             </TouchableOpacity>
             {showEndDate && (
                 <DateTimePicker
+                utcOffset={0}
                 value={endDate}
                 minimumDate={startDate}
                 mode='date'

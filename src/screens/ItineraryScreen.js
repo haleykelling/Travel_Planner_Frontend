@@ -11,7 +11,7 @@ const ItineraryScreen = ({route, navigation}) => {
             renderItem={({item}) => {
                 return (
                     <>
-                    <Text>Day Number {item.number}: {new Date(item.date).toDateString()}</Text>
+                    <Text>Day Number {item.number}: {new Date(`${item.date}T12:00:00`).toDateString()}</Text>
                     </>
                 )
             }}
