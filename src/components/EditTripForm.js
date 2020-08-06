@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
+const EditTripForm = ({trip, editTrip, toggleModal}) => {
     
     const [showStartDate, setShowStartDate] = useState(false)
     const [showEndDate, setShowEndDate] = useState(false)
-    const [name, setName] = useState('')
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
+    const [name, setName] = useState(trip.name)
+    const [startDate, setStartDate] = useState(new Date(trip.start_date))
+    const [endDate, setEndDate] = useState(new Date(trip.end_date))
 
     const toggleShowStartDate = () => setShowStartDate(!showStartDate)
     const toggleShowEndDate = () => setShowEndDate(!showEndDate)
@@ -29,21 +29,16 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             start_date: startDate,
             end_date: endDate
         }
-        
-        addTrip(formData)
-        setName('')
-        setStartDate(new Date())
-        setEndDate(new Date())
+        toggleModal()
     }
 
     const handleClose = () =>{
-        setAlerts('')
         toggleModal() 
     }
 
     return (
         <View>
-            <Text style={styles.headingStyle}>Add a New Trip</Text>
+            <Text style={styles.headingStyle}>Edit {trip.name}</Text>
             <TextInput 
                 style={styles.inputStyle} 
                 placeholder="Name of Trip"
@@ -55,12 +50,12 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             </TouchableOpacity>
             {showStartDate && (
                 <DateTimePicker
-                value={startDate}
-                minimumDate={new Date()}
-                mode='date'
-                display='default'
-                textColor='hsl(278, 48%, 18%)'
-                onChange={onChangeStart}
+                    value={startDate}
+                    minimumDate={new Date()}
+                    mode='date'
+                    display='default'
+                    textColor='hsl(278, 48%, 18%)'
+                    onChange={onChangeStart}
                 />
             )}
             <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowEndDate}>
@@ -68,18 +63,17 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             </TouchableOpacity>
             {showEndDate && (
                 <DateTimePicker
-                value={endDate}
-                minimumDate={startDate}
-                mode='date'
-                display='default'
-                textColor='hsl(278, 48%, 18%)'
-                onChange={onChangeEnd}
+                    value={endDate}
+                    minimumDate={startDate}
+                    mode='date'
+                    display='default'
+                    textColor='hsl(278, 48%, 18%)'
+                    onChange={onChangeEnd}
                 />
             )}
-            {alerts !== '' ? <Text>{alerts}</Text> : null}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeButton} onPress={handleSubmit}>
-                    <Text style={styles.closeText}>Create</Text>
+                    <Text style={styles.closeText}>Update</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
                     <Text style={styles.closeText}>Close Form</Text>
@@ -129,4 +123,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AddTripForm;
+export default EditTripForm;

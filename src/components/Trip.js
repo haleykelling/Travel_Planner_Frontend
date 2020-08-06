@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import Modal from 'react-native-modal';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import EditTripForm from './EditTripForm'
 
 
 const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
@@ -17,7 +19,7 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
                 <Text style={styles.textStyle}>{trip.name}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={toggleModal}>
                     <FontAwesome name="edit" size={24} color="hsl(0, 0%, 30%)" />
                 </TouchableOpacity>
                 <Modal
@@ -25,7 +27,11 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
                     backdropColor='white'
                     backdropOpacity={0.9}
                 >
-                    <EditTripForm editTrip={editTrip}/>
+                    <EditTripForm 
+                        trip={trip} 
+                        editTrip={editTrip} 
+                        toggleModal={toggleModal}
+                    />
                 </Modal>
                 <TouchableOpacity onPress={() => deleteTrip(trip.id)}>
                     <AntDesign name="delete" size={24} color="hsl(0, 0%, 30%)" />
@@ -55,7 +61,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         height: 85,
         marginRight: 8
-    }
+    },
+    modalStyles: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center', 
+    },
 })
 
 export default Trip;
