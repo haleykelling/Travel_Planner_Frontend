@@ -45,8 +45,16 @@ const TripScreen = ({navigation}) => {
         })  
     }
 
-    const editTrip = (id) => {
-
+    const editTrip = (id, dataToEdit) => {
+        fetch(`${tripsUrl}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({trip: dataToEdit})
+        })
+            .then(response => response.json())
+            .then(console.log)
     }
     
     const deleteTrip = (id) => {

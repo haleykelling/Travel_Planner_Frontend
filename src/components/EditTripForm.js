@@ -28,7 +28,7 @@ const EditTripForm = ({trip, editTrip, toggleModal}) => {
             start_date: startDate,
             end_date: endDate
         }
-        console.log(formData)
+        editTrip(trip.id, formData)
         toggleModal()
     }
 
@@ -50,7 +50,7 @@ const EditTripForm = ({trip, editTrip, toggleModal}) => {
             </TouchableOpacity>
             {showStartDate && (
                 <DateTimePicker
-                    value={offsetDate(startDate)}
+                    value={startDate}
                     minimumDate={new Date()}
                     mode='date'
                     display='default'
