@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     headingStyle: {
         textAlign: 'center',
         fontSize: 24,
-        marginVertical: 10
+        marginVertical: 10,
+        color: 'hsl(215, 90%, 20%)'
     },
     textStyle: {
         fontSize: 22,
@@ -117,10 +118,16 @@ const styles = StyleSheet.create({
     buttonStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: 'hsl(278, 48%, 18%)',
-        marginVertical: 45,
+        backgroundColor: 'hsl(215, 90%, 20%)',
+        marginTop: 15,
+        marginBottom: 50,
         marginHorizontal: 30,
-        height: 85
+        height: 85,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
     },
     iconStyle: {
         fontSize: 30,
