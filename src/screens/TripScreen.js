@@ -56,10 +56,7 @@ const TripScreen = ({navigation}) => {
             body: JSON.stringify({trip: dataToEdit})
         })
             .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                setTrips([...old_trips, result])
-            })
+            .then(result => setTrips([...old_trips, result]))
     }
     
     const deleteTrip = (id) => {
@@ -121,7 +118,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'hsl(278, 48%, 18%)',
-        marginVertical: 15,
+        marginVertical: 45,
         marginHorizontal: 30,
         height: 85
     },

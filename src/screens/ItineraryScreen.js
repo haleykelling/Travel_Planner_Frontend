@@ -1,5 +1,7 @@
 import React from 'react';
 import { Text, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Day from '../components/Day';
+import Map from '../components/Map';
 
 const ItineraryScreen = ({route, navigation}) => {
     const {trip} = route.params
@@ -11,13 +13,8 @@ const ItineraryScreen = ({route, navigation}) => {
         <FlatList 
             data={sorted_days}
             keyExtractor={(day) => day.id.toString()}
-            renderItem={({item}) => {
-                return (
-                    <>
-                    <Text>Day Number {item.number}: {new Date(`${item.date}T12:00:00`).toDateString()}</Text>
-                    </>
-                )
-            }}
+            renderItem={({item, index}) => <Day day={item} index={index} />}
+            ListHeaderComponent={<Map />}
         />
     );
 }
