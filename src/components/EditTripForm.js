@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Moment from 'moment';
 
 const EditTripForm = ({trip, editTrip, toggleModal}) => {
 
@@ -13,6 +12,12 @@ const EditTripForm = ({trip, editTrip, toggleModal}) => {
 
     const toggleShowStartDate = () => setShowStartDate(!showStartDate)
     const toggleShowEndDate = () => setShowEndDate(!showEndDate)
+
+    useEffect(() => {
+        setName(trip.name)
+        setStartDate(new Date(`${trip.start_date}T12:00:00`))
+        setEndDate(new Date(`${trip.end_date}T12:00:00`))
+    }, [trip]);
 
     const onChangeStart = (event, selectedDate) => {
         setStartDate(selectedDate)

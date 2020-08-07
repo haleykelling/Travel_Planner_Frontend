@@ -46,6 +46,8 @@ const TripScreen = ({navigation}) => {
     }
 
     const editTrip = (id, dataToEdit) => {
+        const old_trips = trips.filter(trip => trip.id !== id) 
+        
         fetch(`${tripsUrl}/${id}`, {
             method: 'PATCH',
             headers: {
@@ -54,7 +56,10 @@ const TripScreen = ({navigation}) => {
             body: JSON.stringify({trip: dataToEdit})
         })
             .then(response => response.json())
-            .then(console.log)
+            .then(result => {
+                console.log(result)
+                setTrips([...old_trips, result])
+            })
     }
     
     const deleteTrip = (id) => {
