@@ -1,13 +1,15 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 import { useFonts, DancingScript_700Bold } from '@expo-google-fonts/dancing-script';
-import { PlayfairDisplay_400Regular } from '@expo-google-fonts/playfair-display';
+import { PlayfairDisplay_400Regular, PlayfairDisplay_700Bold, PlayfairDisplay_900Black } from '@expo-google-fonts/playfair-display';
 import { AppLoading } from 'expo'
 
 const HomeScreen = ({navigation}) => {
     let [fontsLoaded] = useFonts({
         DancingScript_700Bold,
-        PlayfairDisplay_400Regular
+        PlayfairDisplay_400Regular,
+        PlayfairDisplay_700Bold,
+        PlayfairDisplay_900Black
     });
     
     if (!fontsLoaded){

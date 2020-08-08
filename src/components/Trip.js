@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
+import { PlayfairDisplay_400Regular } from '@expo-google-fonts/playfair-display';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import EditTripForm from './EditTripForm'
 
@@ -46,7 +47,8 @@ const styles = StyleSheet.create({
         fontSize: 22,
         marginHorizontal: 30,
         alignSelf: 'center',
-        color: 'hsl(215, 90%, 20%)'
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'PlayfairDisplay_400Regular'
     },
     tripItemStyle: {
         flexDirection: 'row',

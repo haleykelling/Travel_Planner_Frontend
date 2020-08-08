@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
+import { PlayfairDisplay_400Regular, PlayfairDisplay_700Bold } from '@expo-google-fonts/playfair-display';
+
 
 const Day = ({day, index}) => {
     return (
@@ -33,9 +35,9 @@ const styles = StyleSheet.create({
     },
     headingStyle: {
         fontSize: 20,
-        fontWeight: 'bold',
         alignSelf: 'center',
         marginTop: 15,
+        fontFamily: 'PlayfairDisplay_700Bold'
     },
     cityHeadingBox: {
         borderBottomWidth: 1,
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         alignSelf: 'center',
         marginVertical: 10,
+        fontFamily: 'PlayfairDisplay_400Regular'
     }
 })
 

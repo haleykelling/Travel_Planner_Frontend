@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
+import { PlayfairDisplay_900Black, PlayfairDisplay_700Bold } from '@expo-google-fonts/playfair-display';
+import { Ionicons } from '@expo/vector-icons';
+
 import Trip from '../components/Trip';
 import AddTripForm from '../components/AddTripForm';
-import { Ionicons } from '@expo/vector-icons';
 
 const tripsUrl = 'http://localhost:3000/trips'
 
@@ -107,18 +109,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 24,
         marginVertical: 10,
-        color: 'hsl(215, 90%, 20%)'
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'PlayfairDisplay_700Bold'
     },
     textStyle: {
         fontSize: 22,
         alignSelf: 'center',
         marginLeft: 30,
-        color: 'white'
+        color: 'white',
+        fontFamily: 'PlayfairDisplay_900Black'
     },
     buttonStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: 'hsl(215, 90%, 20%)',
+        backgroundColor: 'hsl(215, 30%, 40%)',
         marginTop: 15,
         marginBottom: 50,
         marginHorizontal: 30,
