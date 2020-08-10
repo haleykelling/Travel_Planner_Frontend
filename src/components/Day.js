@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-
+import { View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import FormatTime from '../helpers/FormatTime'
 
 const Day = ({day, index, navigation}) => {
+    
     return (
         <View >
             <Text style={styles.headingStyle}>
@@ -15,6 +16,32 @@ const Day = ({day, index, navigation}) => {
                         {day.start_city} to {day.end_city}
                     </Text>             
                 }
+                <FlatList
+                    data={day.transportations}
+                    renderItem={({item}) => {
+                        return (
+                            <Text>
+                                {item.start_time ? FormatTime(item.start_time) : null} - 
+                                {item.end_time ? FormatTime(item.end_time) : null} : 
+                                {item.name}
+                            </Text>
+                        )    
+                    }}
+                    listKey={(transportation) => transportation.id.toString()}
+                ></FlatList>
+                <FlatList
+                    data={day.activities}
+                    renderItem={({item}) => {
+                        return (
+                            <Text>
+                                {item.start_time ? FormatTime(item.start_time) : null} - 
+                                {item.end_time ? FormatTime(item.end_time) : null} : 
+                                {item.name}
+                            </Text>
+                        )    
+                    }}
+                    listKey={(activity) => activity.id.toString()}
+                ></FlatList>
             </TouchableOpacity>
         </View>
     );

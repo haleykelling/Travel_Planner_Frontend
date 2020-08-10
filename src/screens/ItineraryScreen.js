@@ -28,8 +28,8 @@ const ItineraryScreen = ({route, navigation}) => {
             data={sortedDays()}
             keyExtractor={(day) => day.id.toString()}
             renderItem={({item, index}) => <Day day={item} index={index} navigation={navigation}/>}
-            ListHeaderComponent={<Map />}
             scrollIndicatorInsets={{ right: 1 }}
+            listKey="days"
         />
     );
     

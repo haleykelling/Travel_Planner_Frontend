@@ -17,6 +17,8 @@ const DayScreen = ({route}) => {
         title: 'Activities',
         data: activitiesSorted
     }]
+
+    console.log(allEvents)
     
     return (
         <SectionList
