@@ -1,21 +1,30 @@
 import React, {useState, useEffect} from 'react';
-import { Text, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, SectionList} from 'react-native';
 import Event from '../components/Event';
-import Map from '../components/Map';
+import AddEvent from '../components/AddEvent';
 
-const DayScreen = ({navigation}) => {
-
+const DayScreen = ({route}) => {
+    const {day} = route.params
+    
     const activities = day.activities
     const transportations = day.transportations
-    const allEvents = activities.concat(transportations.concat(restaurants))
-    const allEventsSorted = allEvents.sort_by((a, b) => a.start_time.to_i - b.start_time.to_i)
+    const activitiesSorted = activities.sort((a, b) => a.start_time - b.start_time)
+    const transportationsSorted = transportations.sort((a, b) => a.end_time - b.start_time)
+    const allEvents = [{
+        title: 'Transportation', 
+        data: transportationsSorted
+    }, {
+        title: 'Activities',
+        data: activitiesSorted
+    }]
     
     return (
-        <FlatList 
-            data={allEventsSorted}
+        <SectionList
+            sections={allEvents}
             keyExtractor={(event) => event.id.toString()}
-            renderItem={({item, index}) => <Event item={item}/>}
-            ListHeaderComponent={<Map />}
+            renderItem={({item}) => <Event event={item}/>}
+            renderSectionHeader={({section: { title }}) => <Text>{title}</Text>}
+            ListEmptyComponent={<AddEvent />}
         />
     );
 }

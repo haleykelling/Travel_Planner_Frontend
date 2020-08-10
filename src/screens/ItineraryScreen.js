@@ -17,32 +17,23 @@ const ItineraryScreen = ({route, navigation}) => {
     })
 
     useEffect(() => {
-        fetch(daysUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({trip_id: trip.id})
-        })
+        fetch(`${daysUrl}?trip_id=${trip.id}`)
             .then(response => response.json())
             .then(result => {
                 setDays(result)
-                setDays(sortedDays())
             })
     }, [])
+   
+    return (
+        <FlatList 
+            data={sortedDays()}
+            keyExtractor={(day) => day.id.toString()}
+            renderItem={({item, index}) => <Day day={item} index={index} navigation={navigation}/>}
+            ListHeaderComponent={<Map />}
+            scrollIndicatorInsets={{ right: 1 }}
+        />
+    );
     
-    if (days.length === 0){
-        return <AppLoading />
-    } else {
-        return (
-            <FlatList 
-                data={days}
-                keyExtractor={(day) => day.id.toString()}
-                renderItem={({item, index}) => <Day day={item} index={index} navigation={navigation}/>}
-                ListHeaderComponent={<Map />}
-            />
-        );
-    }
     
 }
 

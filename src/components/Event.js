@@ -8,7 +8,8 @@ const Event = ({event}) => {
             <Text style={styles.headingStyle}>
                 {event.start_time} - {event.end_time}
                 {event.name}
-                {event.description}
+                {event.details}
+                {event.address}
             </Text>
         </View>
     );
