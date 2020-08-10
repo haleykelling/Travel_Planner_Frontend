@@ -15,13 +15,11 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
 
 
     const onChangeStart = (event, selectedDate) => {
-        console.log(selectedDate)
         setStartDate(selectedDate)
         setEndDate(selectedDate)
     }
     
     const onChangeEnd = (event, selectedDate) => {
-        console.log(selectedDate)
         setEndDate(selectedDate)
     }
     
@@ -31,7 +29,6 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             start_date: startDate,
             end_date: endDate
         }
-        console.log(formData)
         addTrip(formData)
         setName('')
         setStartDate(new Date())

@@ -5,15 +5,16 @@ import Map from '../components/Map';
 
 const ItineraryScreen = ({route, navigation}) => {
     const {trip} = route.params
-    const sorted_days = trip.days.sort((a,b) => {
+    const sortedDays = trip.days.sort((a,b) => {
         return new Date(a.date) - new Date(b.date)
     })
+    console.log(trip)
     
     return (
         <FlatList 
-            data={sorted_days}
+            data={sortedDays}
             keyExtractor={(day) => day.id.toString()}
-            renderItem={({item, index}) => <Day day={item} index={index} />}
+            renderItem={({item, index}) => <Day day={item} index={index} navigation={navigation}/>}
             ListHeaderComponent={<Map />}
         />
     );

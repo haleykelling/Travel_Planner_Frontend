@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/screens/HomeScreen';
 import TripScreen from './src/screens/TripScreen';
 import ItineraryScreen from './src/screens/ItineraryScreen';
+import DayScreen from './src/screens/DayScreen';
 
 const Stack = createStackNavigator()
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Trip" component={TripScreen} />
         <Stack.Screen name="Itinerary" component={ItineraryScreen} />
+        <Stack.Screen name="Day" component={DayScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

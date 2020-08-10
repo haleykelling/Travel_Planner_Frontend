@@ -1,27 +1,21 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 
 
-const Day = ({day, index, navigation}) => {
+const Event = ({event}) => {
     return (
-        <View >
+        <View style={styles.eventStyle}>
             <Text style={styles.headingStyle}>
-                Day Number {index + 1} - {new Date(`${day.date}T12:00:00`).toDateString()}
+                {event.start_time} - {event.end_time}
+                {event.name}
+                {event.description}
             </Text>
-            <TouchableOpacity style={styles.dayStyle} onPress={() => navigation.navigate('Day', {day: day})}>
-                {day.start_city === day.end_city 
-                    ? <Text style={styles.cityHeadingStyle}>{day.start_city}</Text>
-                    : <Text style={styles.cityHeadingStyle}>
-                        {day.start_city} to {day.end_city}
-                    </Text>             
-                }
-            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    dayStyle: {
+    eventStyle: {
         marginHorizontal: 10,
         marginVertical: 10,
         height: 230,
@@ -46,4 +40,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Day;
+export default Event;
