@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
         alignSelf: 'center',
         color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'PlayfairDisplay_400Regular'
+        fontFamily: 'Raleway_400Regular'
     },
     tripItemStyle: {
         flexDirection: 'row',

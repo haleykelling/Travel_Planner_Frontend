@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignSelf: 'center',
         marginTop: 15,
-        fontFamily: 'PlayfairDisplay_700Bold'
+        fontFamily: 'Raleway_700Bold'
     },
     cityHeadingStyle: {
         fontSize: 18,
         alignSelf: 'center',
         marginVertical: 10,
-        fontFamily: 'PlayfairDisplay_400Regular'
+        fontFamily: 'Raleway_400Regular'
     }
 })
 

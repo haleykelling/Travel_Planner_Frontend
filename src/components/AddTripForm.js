@@ -96,17 +96,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginVertical: 20,
         color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'PlayfairDisplay_700Bold'
+        fontFamily: 'Raleway_700Bold'
     },
     textStyle: {
         fontSize: 24,
         color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'PlayfairDisplay_400Regular'
+        fontFamily: 'Raleway_400Regular'
     },
     inputStyle: {
         fontSize: 24,
         color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'PlayfairDisplay_400Regular',
+        fontFamily: 'Raleway_400Regular',
         marginVertical: 10,
         marginHorizontal: 30,
         padding: 10,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         textAlign: 'center',
-        fontFamily: 'PlayfairDisplay_700Bold'
+        fontFamily: 'Raleway_700Bold'
     }
 })
 

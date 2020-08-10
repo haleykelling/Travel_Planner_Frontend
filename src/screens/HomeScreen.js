@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 import { useFonts, DancingScript_700Bold } from '@expo-google-fonts/dancing-script';
-import { PlayfairDisplay_400Regular, PlayfairDisplay_700Bold, PlayfairDisplay_900Black } from '@expo-google-fonts/playfair-display';
+import { Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '@expo-google-fonts/raleway';
 import { AppLoading } from 'expo'
 
 const HomeScreen = ({navigation}) => {
     let [fontsLoaded] = useFonts({
         DancingScript_700Bold,
-        PlayfairDisplay_400Regular,
-        PlayfairDisplay_700Bold,
-        PlayfairDisplay_900Black
+        Raleway_100Thin,
+        Raleway_400Regular,
+        Raleway_700Bold
     });
     
     if (!fontsLoaded){
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginLeft: 35,      
         fontSize: 22,
         color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'PlayfairDisplay_400Regular'
+        fontFamily: 'Raleway_400Regular'
     }
 })
 

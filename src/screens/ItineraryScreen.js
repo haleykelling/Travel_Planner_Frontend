@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { Text, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Day from '../components/Day';
 import Map from '../components/Map';
-import { AppLoading } from 'expo';
 
 
 const daysUrl = 'http://localhost:3000/days'

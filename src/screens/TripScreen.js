@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
         fontSize: 24,
         marginVertical: 10,
         color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'PlayfairDisplay_700Bold'
+        fontFamily: 'Raleway_700Bold'
     },
     textStyle: {
         fontSize: 22,
         alignSelf: 'center',
         marginLeft: 30,
         color: 'white',
-        fontFamily: 'PlayfairDisplay_900Black'
+        fontFamily: 'Raleway_700Bold'
     },
     buttonStyle: {
         flexDirection: 'row',
