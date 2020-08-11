@@ -5,6 +5,7 @@ import Map from '../components/Map';
 
 
 const daysUrl = 'http://localhost:3000/days'
+const eventsUrl = 'http://localhost:3000/events'
 
 const ItineraryScreen = ({route, navigation}) => {
     const {trip} = route.params
@@ -22,12 +23,31 @@ const ItineraryScreen = ({route, navigation}) => {
                 setDays(result)
             })
     }, [])
+
+    addEvent = (event) => {
+        fetch(eventsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({event: event})
+        })
+            .then(response => response.json())
+            .then(console.log)
+    }
    
     return (
         <FlatList 
             data={sortedDays()}
             keyExtractor={(day) => day.id.toString()}
-            renderItem={({item, index}) => <Day day={item} index={index} navigation={navigation}/>}
+            renderItem={({item, index}) => {
+                return <Day 
+                    day={item} 
+                    index={index} 
+                    navigation={navigation} 
+                    addEvent={addEvent}
+                    />
+            }}
             scrollIndicatorInsets={{ right: 1 }}
             listKey="days"
         />
