@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
-import { PlayfairDisplay_900Black, PlayfairDisplay_700Bold } from '@expo-google-fonts/playfair-display';
 import { Ionicons } from '@expo/vector-icons';
 
 import Trip from '../components/Trip';

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import FormatTime from '../helpers/FormatTime'
 
-const Day = ({day, index, addEvent, navigation}) => {
+const Day = ({day, index, navigation}) => {
     
     return (
         <View >
@@ -11,7 +11,7 @@ const Day = ({day, index, addEvent, navigation}) => {
             </Text>
             <TouchableOpacity 
                 style={styles.dayStyle} 
-                onPress={() => navigation.navigate('Day', {day: day, addEvent: addEvent})}
+                onPress={() => navigation.navigate('Day', {day: day})}
             >
                 {day.start_city === day.end_city 
                     ? <Text style={styles.cityHeadingStyle}>{day.start_city}</Text>
@@ -24,9 +24,9 @@ const Day = ({day, index, addEvent, navigation}) => {
                     renderItem={({item}) => {
                         return (
                             <Text>
-                                {item.start_time ? FormatTime(item.start_time) : null} - 
-                                {item.end_time ? FormatTime(item.end_time) : null} : 
-                                {item.name}
+                                {item.start_time ? FormatTime(item.start_time) : null}
+                                {item.end_time ? " - " + FormatTime(item.end_time) : null}
+                                {" " + item.name}
                             </Text>
                         )    
                     }}
@@ -37,9 +37,9 @@ const Day = ({day, index, addEvent, navigation}) => {
                     renderItem={({item}) => {
                         return (
                             <Text>
-                                {item.start_time ? FormatTime(item.start_time) : null} - 
-                                {item.end_time ? FormatTime(item.end_time) : null} : 
-                                {item.name}
+                                {item.start_time ? FormatTime(item.start_time) : null} 
+                                {item.end_time ? " - " + FormatTime(item.end_time) : null}  
+                                {" " + item.name}
                             </Text>
                         )    
                     }}

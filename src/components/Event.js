@@ -3,13 +3,12 @@ import { View, Text, StyleSheet} from 'react-native';
 import FormatTime from '../helpers/FormatTime'
 
 const Event = ({event}) => {
-    console.log(event)
     return (
         <View style={styles.eventStyle}>
             <Text style={styles.headingStyle}>{event.name}</Text>
             <Text style={styles.headingStyle}>
-                {event.start_time ? FormatTime(event.start_time) : null} - 
-                {event.end_time ? FormatTime(event.end_time) : null}
+                {event.start_time ? FormatTime(event.start_time) : null}
+                {event.end_time ? " - " + FormatTime(event.end_time) : null}
             </Text>
             <Text style={styles.detailsStyle}>{event.details}</Text>
             <Text style={styles.addressStyle}>{event.address}</Text>

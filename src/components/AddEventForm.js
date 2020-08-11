@@ -1,24 +1,25 @@
-import React from 'react';
-import {TouchableOpacity, View, Text, TextInput, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import {TouchableOpacity, View, Text, TextInput, Picker, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const AddEventForm = ({toggleModal, addEvent}) => {
+const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
         
-    const [showStartTime, setShowStartTime] = useState(false)
-    const [showEndTime, setShowEndTime] = useState(false)
+    const [activityType, setActivityType] = useState('General')
     const [name, setName] = useState('')
     const [details, setDetails] = useState('')
     const [address, setAddress] = useState('')
-    const [startTime, setStartTime] = useState(new Time())
-    const [endTime, setEndTime] = useState(new Time())
+    const [startTime, setStartTime] = useState(new Date())
+    const [endTime, setEndTime] = useState(new Date())
+    
+    const [showStartTime, setShowStartTime] = useState(false)
+    const [showEndTime, setShowEndTime] = useState(false)
 
     const toggleShowStartTime = () => setShowStartTime(!showStartTime)
     const toggleShowEndTime = () => setShowEndTime(!showEndTime)
 
-
+    
     const onChangeStart = (event, selectedTime) => {
         setStartTime(selectedTime)
-        setEndTime(selectedTime)
     }
     
     const onChangeEnd = (event, selectedTime) => {
@@ -26,29 +27,72 @@ const AddEventForm = ({toggleModal, addEvent}) => {
     }
     
     const handleSubmit = () => {
+        const startTimeInteger = formatTimeToInteger(startTime)
+        const endTimeInteger = formatTimeToInteger(endTime)
+
         const formData = {
+            type_of_activity: activityType,
             name: name,
             details: details,
             address: address,
-            start_time: startTime,
-            end_time: endTime
+            start_time: startTimeInteger,
+            end_time: endTimeInteger,
+            day_id: day.id
         }
-        addTrip(formData)
+
+        if (activityType === 'Transportation'){
+            addTransportation(formData)
+        } else {
+            addActivity(formData)
+        }
+        setActivityType('General')
         setName('')
         setDetails('')
         setAddress('')
-        setStartTime(new Time())
-        setEndTime(new Time())
+        setStartTime(new Date())
+        setEndTime(new Date())
+        toggleModal()
     }
 
     const handleClose = () =>{
-        setAlerts('')
         toggleModal() 
+    }
+
+    const formatTime = (time) => {
+        const string = time.toLocaleTimeString()
+        const formatted = [string.slice(0, -6), string.slice(-3)].join('')
+        return formatted
+    }
+
+    const formatTimeToInteger = (time) => {
+        const timeString = formatTime(time)
+        if (timeString.slice(-2) === 'AM' && timeString.slice(0, 2) === '12'){
+            const integer = parseInt(timeString.slice(0, -3).split(':').join(''))
+            return integer - 1200
+        } else if (timeString.slice(-2) === 'AM'){
+            return parseInt(timeString.slice(0, -3).split(':').join(''))
+        } else {
+            const integer = parseInt(timeString.slice(0, -3).split(':').join(''))
+            return integer + 1200
+        }
     }
 
     return (
         <View>
-            <Text style={styles.headingStyle}>Add a New Trip</Text>
+            <Text style={styles.headingStyle}>Add a New Event</Text>
+            <Picker
+                selectedValue={activityType}
+                onValueChange={setActivityType}
+                itemStyle={styles.pickerStyle}
+                style={{height: 165}}
+            >
+                <Picker.Item label="General" value="General" />
+                <Picker.Item label="Transportation" value="Transportation" />
+                <Picker.Item label="Sightseeing" value="Sightseeing" />
+                <Picker.Item label="Food/Drink" value="Food/Drink" />
+                <Picker.Item label="Art/Culture" value="Art/Culture" />
+                <Picker.Item label="History" value="History" />
+            </Picker>
             <TextInput 
                 style={styles.inputStyle} 
                 placeholder="Name of Event"
@@ -67,10 +111,16 @@ const AddEventForm = ({toggleModal, addEvent}) => {
                 value={address}
                 onChangeText={setAddress}
                 />
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowStartDate}>
-                <Text style={styles.textStyle}>{startDate.toDateString()}</Text>
+            <TouchableOpacity 
+                style={styles.buttonStyle} 
+                onPress={() => {
+                    toggleShowStartTime()
+                    setShowEndTime(false)
+                }}
+            >
+                <Text style={styles.textStyle}>{formatTime(startTime)}</Text>
             </TouchableOpacity>
-            {showStartDate && (
+            {showStartTime && (
                 <DateTimePicker
                 utcOffset={0}
                 value={startTime}
@@ -80,20 +130,27 @@ const AddEventForm = ({toggleModal, addEvent}) => {
                 onChange={onChangeStart}
                 />
                 )}
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowEndDate}>
-                <Text style={styles.textStyle}>{endDate.toDateString()}</Text>
+            <TouchableOpacity 
+                style={styles.buttonStyle} 
+                onPress={() => {
+                    toggleShowEndTime()
+                    setShowStartTime(false)
+                }}
+            >
+                <Text style={styles.textStyle}>{formatTime(endTime)}</Text>
             </TouchableOpacity>
-            {showEndDate && (
+            {showEndTime && (
                 <DateTimePicker
                 utcOffset={0}
                 value={endTime}
+                minimumDate={startTime}
                 mode='time'
                 display='default'
                 textColor='hsl(278, 48%, 18%)'
                 onChange={onChangeEnd}
                 />
                 )}
-            {alerts !== '' ? <Text>{alerts}</Text> : null}
+            {/* {alerts !== '' ? <Text>{alerts}</Text> : null} */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeButton} onPress={handleSubmit}>
                     <Text style={styles.closeText}>Create</Text>
@@ -110,7 +167,6 @@ const styles = StyleSheet.create({
     headingStyle: {
         fontSize: 28,
         alignSelf: 'center',
-        marginVertical: 20,
         color: 'hsl(215, 90%, 20%)',
         fontFamily: 'Raleway_700Bold'
     },
@@ -118,6 +174,11 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: 'hsl(215, 90%, 20%)',
         fontFamily: 'Raleway_400Regular'
+    },
+    pickerStyle: {
+        fontSize: 24,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_400Regular',
     },
     inputStyle: {
         fontSize: 24,

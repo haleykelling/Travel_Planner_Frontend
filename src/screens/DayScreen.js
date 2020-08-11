@@ -3,24 +3,57 @@ import { Text, StyleSheet, TouchableOpacity, SectionList} from 'react-native';
 import Modal from 'react-native-modal'
 import Event from '../components/Event';
 import AddEventForm from '../components/AddEventForm';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const activitiesUrl = 'http://localhost:3000/activities'
+const transportationsUrl = 'http://localhost:3000/transportations'
 
 const DayScreen = ({route}) => {
     const {day} = route.params
-    const {addEvent} = route.params
+    
     const [isModalVisible, setIsModalVisible] = useState(false)
+    const [activities, setActivities] = useState(day.activities)
+    const [transportations, setTransportations] = useState(day.transportations)
     
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 
-    const activitiesSorted = day.activities.sort((a, b) => a.start_time - b.start_time)
-    const transportationsSorted = day.transportations.sort((a, b) => a.end_time - b.start_time)
+    const activitiesSorted = () => {
+        return activities.sort((a, b) => a.start_time - b.start_time)
+    }
+    const transportationsSorted = () => {
+        return transportations.sort((a, b) => a.end_time - b.start_time)
+    }
+    
     const allEvents = [{
         title: 'Transportation', 
-        data: transportationsSorted
+        data: transportationsSorted()
     }, {
         title: 'Activities',
-        data: activitiesSorted
+        data: activitiesSorted()
     }]
+
+    const addActivity = (event) => {
+        fetch(activitiesUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({activity: event})
+        })
+            .then(response => response.json())
+            .then(result => setActivities([...activities, result]))
+    }
+
+    const addTransportation = (event) => {
+        fetch(transportationsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({transportation: event})
+        })
+            .then(response => response.json())
+            .then(result => setTransportations([...transportations, result]))
+    }
     
     return (
         <>
@@ -33,8 +66,10 @@ const DayScreen = ({route}) => {
                 backdropOpacity={0.9}
             >
                 <AddEventForm 
-                    addEvent={addEvent} 
+                    addActivity={addActivity} 
+                    addTransportation={addTransportation} 
                     toggleModal={toggleModal}
+                    day={day}
                 />
             </Modal>
             <SectionList
@@ -42,7 +77,6 @@ const DayScreen = ({route}) => {
                 keyExtractor={(event) => event.id.toString()}
                 renderItem={({item}) => <Event event={item}/>}
                 renderSectionHeader={({section: { title }}) => <Text>{title}</Text>}
-                ListEmptyComponent={<AddEvent />}
             />
         </>
     );
