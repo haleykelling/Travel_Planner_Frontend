@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import { Text, StyleSheet, TouchableOpacity, SectionList} from 'react-native';
-import Modal from 'react-native-modal'
+import { Text, StyleSheet, TouchableOpacity, Button, SectionList} from 'react-native';
+import Modal from 'react-native-modal';
+import { HeaderBackButton } from '@react-navigation/stack';
 import Event from '../components/Event';
 import AddEventForm from '../components/AddEventForm';
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const transportationsUrl = 'http://localhost:3000/transportations'
 
-const DayScreen = ({route}) => {
+const DayScreen = ({route, navigation}) => {
     const {day} = route.params
     
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -52,7 +53,16 @@ const DayScreen = ({route}) => {
             body: JSON.stringify({transportation: event})
         })
             .then(response => response.json())
-            .then(result => setTransportations([...transportations, result]))
+            .then(result => {
+                setTransportations([...transportations, result])
+                navigation.setOptions({
+                    headerLeft: () => {
+                        return <Button title="Itinerary" onPress={() => (
+                            navigation.navigate('Itinerary', {transportation: result}))}
+                        />
+                    }
+                })
+            })
     }
     
     return (

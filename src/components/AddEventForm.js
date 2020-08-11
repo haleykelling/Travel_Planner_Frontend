@@ -45,13 +45,13 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
         } else {
             addActivity(formData)
         }
+        toggleModal()
         setActivityType('General')
         setName('')
         setDetails('')
         setAddress('')
         setStartTime(new Date())
         setEndTime(new Date())
-        toggleModal()
     }
 
     const handleClose = () =>{
