@@ -66,22 +66,34 @@ const ItineraryScreen = ({route, navigation}) => {
     }
    
     return (
-        <FlatList 
-            data={sortedDays()}
-            keyExtractor={(day) => day.id.toString()}
-            renderItem={({item, index}) => {
-                return <Day 
-                    day={item} 
-                    index={index} 
-                    navigation={navigation}
-                    updateDays={updateDays} 
-                    />
-            }}
-            scrollIndicatorInsets={{ right: 1 }}
-        />
-    );
-    
-    
+        <>
+        <Text style={styles.headingStyle}>{trip.name}</Text>
+            <FlatList 
+                data={sortedDays()}
+                keyExtractor={(day) => day.id.toString()}
+                renderItem={({item, index}) => {
+                    return <Day 
+                        day={item} 
+                        index={index} 
+                        trip={trip}
+                        navigation={navigation}
+                        updateDays={updateDays} 
+                        />
+                }}
+                scrollIndicatorInsets={{ right: 1 }}
+            />
+        </>
+    );    
 }
+
+const styles = StyleSheet.create({
+    headingStyle: {
+        textAlign: 'center',
+        fontSize: 24,
+        fontFamily: 'Raleway_700Bold',
+        color: 'hsl(215, 90%, 20%)',
+        marginVertical: 10
+    }
+})
 
 export default ItineraryScreen;

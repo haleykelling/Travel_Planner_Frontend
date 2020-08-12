@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Button, SectionList} from 'react-native';
 import Modal from 'react-native-modal';
-import { HeaderBackButton } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
 import Event from '../components/Event';
 import AddEventForm from '../components/AddEventForm';
 import { updateLocale } from 'moment';
@@ -127,9 +127,6 @@ const DayScreen = ({route, navigation}) => {
     
     return (
         <>
-            <TouchableOpacity onPress={toggleModal}>
-                <Text>Add Event</Text>
-            </TouchableOpacity>
             <Modal
                 isVisible={isModalVisible}
                 backdropColor='white'
@@ -148,12 +145,54 @@ const DayScreen = ({route, navigation}) => {
                 sections={allEvents}
                 keyExtractor={(event) => event.id.toString()}
                 renderItem={({item}) => <Event event={item} deleteEvent={deleteEvent}/>}
-                renderSectionHeader={({section: { title }}) => <Text>{title}</Text>}
+                renderSectionHeader={({section: { title }}) => <Text style={styles.headingStyle}>{title}</Text>}
             />
             : null
             }
+            <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
+                <Text style={styles.textStyle}>Add Event</Text>
+                <Ionicons style={styles.iconStyle} name="ios-add"  />
+            </TouchableOpacity>
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    headingStyle: {
+        color: 'hsl(215, 30%, 40%)',
+        fontSize: 24,
+        fontFamily: 'Raleway_700Bold',
+        padding: 10,
+        marginBottom: 10,
+        backgroundColor: 'white'
+    },
+    buttonStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: 'hsl(215, 30%, 40%)',
+        marginTop: 15,
+        marginBottom: 50,
+        marginHorizontal: 30,
+        height: 85,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
+    },
+    iconStyle: {
+        fontSize: 30,
+        color: 'white',
+        marginTop: 27,
+        marginRight: 30
+    },
+    textStyle: {
+        fontSize: 22,
+        alignSelf: 'center',
+        marginLeft: 30,
+        color: 'white',
+        fontFamily: 'Raleway_700Bold'
+    },
+})
 
 export default DayScreen;
