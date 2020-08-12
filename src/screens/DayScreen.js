@@ -6,9 +6,9 @@ import Event from '../components/Event';
 import AddEventForm from '../components/AddEventForm';
 import { updateLocale } from 'moment';
 
-const activitiesUrl = 'http://localhost:3000/activities'
-const transportationsUrl = 'http://localhost:3000/transportations'
-const dayTransportationsUrl = 'http://localhost:3000/day_transportations'
+const activitiesUrl = 'https://stormy-fjord-63158.herokuapp.com/activities'
+const transportationsUrl = 'https://stormy-fjord-63158.herokuapp.com/transportations'
+const dayTransportationsUrl = 'https://stormy-fjord-63158.herokuapp.com/day_transportations'
 
 const DayScreen = ({route, navigation}) => {
     const {day} = route.params

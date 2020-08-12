@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Trip from '../components/Trip';
 import AddTripForm from '../components/AddTripForm';
 
-const tripsUrl = 'http://localhost:3000/trips'
+const tripsUrl = 'https://stormy-fjord-63158.herokuapp.com/trips'
 
 const TripScreen = ({navigation}) => {
 
