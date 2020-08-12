@@ -4,9 +4,11 @@ import Modal from 'react-native-modal';
 import { HeaderBackButton } from '@react-navigation/stack';
 import Event from '../components/Event';
 import AddEventForm from '../components/AddEventForm';
+import { updateLocale } from 'moment';
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const transportationsUrl = 'http://localhost:3000/transportations'
+const dayTransportationsUrl = 'http://localhost:3000/day_transportations'
 
 const DayScreen = ({route, navigation}) => {
     const {day} = route.params
@@ -32,6 +34,31 @@ const DayScreen = ({route, navigation}) => {
         data: activitiesSorted()
     }]
 
+    const updateBackButton = (activity, deleteActivity) => {
+        if (deleteActivity){
+            navigation.setOptions({
+                headerLeft: () => {
+                    return <Button title="Itinerary" onPress={() => (
+                        navigation.navigate('Itinerary', {
+                            activityToDelete: activity,
+                        }))}
+                    />
+                }
+            })
+        } else {
+            navigation.setOptions({
+                headerLeft: () => {
+                    return <Button title="Itinerary" onPress={() => (
+                        navigation.navigate('Itinerary', {
+                            activity: activity,
+                            dayId: day.id
+                        }))}
+                    />
+                }
+            })
+        }
+    }
+
     const addActivity = (event) => {
         fetch(activitiesUrl, {
             method: 'POST',
@@ -41,7 +68,10 @@ const DayScreen = ({route, navigation}) => {
             body: JSON.stringify({activity: event})
         })
             .then(response => response.json())
-            .then(result => setActivities([...activities, result]))
+            .then(result => {
+                setActivities([...activities, result])
+                updateBackButton(result, false)
+            })
     }
 
     const addTransportation = (event) => {
@@ -55,14 +85,44 @@ const DayScreen = ({route, navigation}) => {
             .then(response => response.json())
             .then(result => {
                 setTransportations([...transportations, result])
-                navigation.setOptions({
-                    headerLeft: () => {
-                        return <Button title="Itinerary" onPress={() => (
-                            navigation.navigate('Itinerary', {transportation: result}))}
-                        />
-                    }
-                })
+                updateBackButton(result, false)
+                return result
             })
+            .then(result => {
+                fetch(dayTransportationsUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }, 
+                    body: JSON.stringify({day_id: day.id, transportation_id: result.id})
+                })
+                .catch(error => console.log(error))
+            })
+    }
+
+    const deleteEvent = (event) => {
+        if (event.type_of_activity === "Transportation"){
+            const newTransportations = transportations.filter(transportation => {
+                return transportation.id !== event.id
+            })
+            setTransportations(newTransportations)
+            deleteFetch(`${transportationsUrl}/${event.id}`)
+            updateBackButton(event, true)
+        } else {
+            console.log('activity delete')
+            const newActivities = activities.filter(activity => {
+                return activity.id !== event.id
+            })
+            setActivities(newActivities)
+            deleteFetch(`${activitiesUrl}/${event.id}`)
+            updateBackButton(event, true)
+        }
+    }
+
+    const deleteFetch = (url) => {
+        fetch(url, {
+            method: 'DELETE'
+        })
     }
     
     return (
@@ -82,12 +142,16 @@ const DayScreen = ({route, navigation}) => {
                     day={day}
                 />
             </Modal>
-            <SectionList
+            
+            {activities.length !== 0 || transportations.length !== 0 
+            ? <SectionList
                 sections={allEvents}
                 keyExtractor={(event) => event.id.toString()}
-                renderItem={({item}) => <Event event={item}/>}
+                renderItem={({item}) => <Event event={item} deleteEvent={deleteEvent}/>}
                 renderSectionHeader={({section: { title }}) => <Text>{title}</Text>}
             />
+            : null
+            }
         </>
     );
 }

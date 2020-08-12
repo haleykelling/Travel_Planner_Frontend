@@ -49,7 +49,10 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
                 value={name}
                 onChangeText={setName}
                 />
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowStartDate}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => {
+                toggleShowStartDate()
+                setShowEndDate(false)
+                }}>
                 <Text style={styles.textStyle}>{startDate.toDateString()}</Text>
             </TouchableOpacity>
             {showStartDate && (
@@ -63,7 +66,10 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
                 onChange={onChangeStart}
                 />
             )}
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowEndDate}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => {
+                toggleShowEndDate()
+                setShowStartDate(false)
+            }}>
                 <Text style={styles.textStyle}>{endDate.toDateString()}</Text>
             </TouchableOpacity>
             {showEndDate && (

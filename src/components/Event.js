@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import FormatTime from '../helpers/FormatTime'
 
-const Event = ({event}) => {
+const Event = ({event, deleteEvent}) => {
     return (
         <View style={styles.eventStyle}>
             <Text style={styles.headingStyle}>{event.name}</Text>
@@ -12,6 +13,9 @@ const Event = ({event}) => {
             </Text>
             <Text style={styles.detailsStyle}>{event.details}</Text>
             <Text style={styles.addressStyle}>{event.address}</Text>
+            <TouchableOpacity onPress={() => deleteEvent(event)}>
+                <AntDesign name="delete" size={24} color="hsl(215, 30%, 40%)" />
+            </TouchableOpacity>
         </View>
     );
 }
