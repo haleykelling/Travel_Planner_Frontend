@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Moment from 'moment';
 
 const EditTripForm = ({trip, editTrip, toggleModal}) => {
 
@@ -13,6 +12,12 @@ const EditTripForm = ({trip, editTrip, toggleModal}) => {
 
     const toggleShowStartDate = () => setShowStartDate(!showStartDate)
     const toggleShowEndDate = () => setShowEndDate(!showEndDate)
+
+    useEffect(() => {
+        setName(trip.name)
+        setStartDate(new Date(`${trip.start_date}T12:00:00`))
+        setEndDate(new Date(`${trip.end_date}T12:00:00`))
+    }, [trip]);
 
     const onChangeStart = (event, selectedDate) => {
         setStartDate(selectedDate)
@@ -76,7 +81,7 @@ const EditTripForm = ({trip, editTrip, toggleModal}) => {
                     <Text style={styles.closeText}>Update</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-                    <Text style={styles.closeText}>Close Form</Text>
+                    <Text style={styles.closeText}>Exit</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -86,40 +91,61 @@ const EditTripForm = ({trip, editTrip, toggleModal}) => {
 const styles = StyleSheet.create({
     headingStyle: {
         fontSize: 28,
-        fontWeight: 'bold',
         alignSelf: 'center',
         marginVertical: 20,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_700Bold'
     },
     textStyle: {
         fontSize: 24,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_400Regular'
     },
     inputStyle: {
         fontSize: 24,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_400Regular',
         marginVertical: 10,
         marginHorizontal: 30,
         padding: 10,
-        backgroundColor: 'hsl(240, 83%, 93%)',
+        backgroundColor: 'hsl(215, 62%, 90%)',
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.5,
     },
     buttonStyle: {
         marginVertical: 10,
         marginHorizontal: 30,
         padding: 10,
-        backgroundColor: 'hsl(240, 83%, 93%)',
+        backgroundColor: 'hsl(215, 62%, 90%)',
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.5,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
     closeButton: {
-        backgroundColor: 'hsl(278, 48%, 18%)',
+        backgroundColor: 'hsl(215, 30%, 40%)',
         marginVertical: 15,
         padding: 12,
         width: 130,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
     },
     closeText: {
         color: 'white',
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Raleway_700Bold'
     }
 })
 

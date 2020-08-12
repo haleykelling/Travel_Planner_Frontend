@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
+import { Ionicons } from '@expo/vector-icons';
+
 import Trip from '../components/Trip';
 import AddTripForm from '../components/AddTripForm';
-import { Ionicons } from '@expo/vector-icons';
 
 const tripsUrl = 'http://localhost:3000/trips'
 
@@ -46,6 +47,8 @@ const TripScreen = ({navigation}) => {
     }
 
     const editTrip = (id, dataToEdit) => {
+        const old_trips = trips.filter(trip => trip.id !== id) 
+        
         fetch(`${tripsUrl}/${id}`, {
             method: 'PATCH',
             headers: {
@@ -54,7 +57,7 @@ const TripScreen = ({navigation}) => {
             body: JSON.stringify({trip: dataToEdit})
         })
             .then(response => response.json())
-            .then(console.log)
+            .then(result => setTrips([...old_trips, result]))
     }
     
     const deleteTrip = (id) => {
@@ -104,21 +107,30 @@ const styles = StyleSheet.create({
     headingStyle: {
         textAlign: 'center',
         fontSize: 24,
-        marginVertical: 10
+        marginVertical: 10,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_700Bold'
     },
     textStyle: {
         fontSize: 22,
         alignSelf: 'center',
         marginLeft: 30,
-        color: 'white'
+        color: 'white',
+        fontFamily: 'Raleway_700Bold'
     },
     buttonStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: 'hsl(278, 48%, 18%)',
-        marginVertical: 15,
+        backgroundColor: 'hsl(215, 30%, 40%)',
+        marginTop: 15,
+        marginBottom: 50,
         marginHorizontal: 30,
-        height: 85
+        height: 85,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
     },
     iconStyle: {
         fontSize: 30,

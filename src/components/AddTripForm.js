@@ -15,13 +15,11 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
 
 
     const onChangeStart = (event, selectedDate) => {
-        console.log(selectedDate)
         setStartDate(selectedDate)
         setEndDate(selectedDate)
     }
     
     const onChangeEnd = (event, selectedDate) => {
-        console.log(selectedDate)
         setEndDate(selectedDate)
     }
     
@@ -31,7 +29,6 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
             start_date: startDate,
             end_date: endDate
         }
-        console.log(formData)
         addTrip(formData)
         setName('')
         setStartDate(new Date())
@@ -52,7 +49,10 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
                 value={name}
                 onChangeText={setName}
                 />
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowStartDate}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => {
+                toggleShowStartDate()
+                setShowEndDate(false)
+                }}>
                 <Text style={styles.textStyle}>{startDate.toDateString()}</Text>
             </TouchableOpacity>
             {showStartDate && (
@@ -66,7 +66,10 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
                 onChange={onChangeStart}
                 />
             )}
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowEndDate}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => {
+                toggleShowEndDate()
+                setShowStartDate(false)
+            }}>
                 <Text style={styles.textStyle}>{endDate.toDateString()}</Text>
             </TouchableOpacity>
             {showEndDate && (
@@ -86,7 +89,7 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
                     <Text style={styles.closeText}>Create</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-                    <Text style={styles.closeText}>Close Form</Text>
+                    <Text style={styles.closeText}>Exit</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -96,40 +99,61 @@ const AddTripForm = ({toggleModal, addTrip, alerts, setAlerts}) => {
 const styles = StyleSheet.create({
     headingStyle: {
         fontSize: 28,
-        fontWeight: 'bold',
         alignSelf: 'center',
         marginVertical: 20,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_700Bold'
     },
     textStyle: {
         fontSize: 24,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_400Regular'
     },
     inputStyle: {
         fontSize: 24,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_400Regular',
         marginVertical: 10,
         marginHorizontal: 30,
         padding: 10,
-        backgroundColor: 'hsl(240, 83%, 93%)',
+        backgroundColor: 'hsl(215, 62%, 90%)',
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.5,
     },
     buttonStyle: {
         marginVertical: 10,
         marginHorizontal: 30,
         padding: 10,
-        backgroundColor: 'hsl(240, 83%, 93%)',
+        backgroundColor: 'hsl(215, 62%, 90%)',
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.5,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
     closeButton: {
-        backgroundColor: 'hsl(278, 48%, 18%)',
+        backgroundColor: 'hsl(215, 30%, 40%)',
         marginVertical: 15,
         padding: 12,
         width: 130,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
     },
     closeText: {
         color: 'white',
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Raleway_700Bold'
     }
 })
 

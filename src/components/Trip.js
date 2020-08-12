@@ -20,7 +20,7 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={toggleModal}>
-                    <FontAwesome name="edit" size={24} color="hsl(0, 0%, 30%)" />
+                    <FontAwesome name="edit" size={24} color="hsl(215, 30%, 40%)" />
                 </TouchableOpacity>
                 <Modal
                     isVisible={isModalVisible}
@@ -34,7 +34,7 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
                     />
                 </Modal>
                 <TouchableOpacity onPress={() => deleteTrip(trip.id)}>
-                    <AntDesign name="delete" size={24} color="hsl(0, 0%, 30%)" />
+                    <AntDesign name="delete" size={24} color="hsl(215, 30%, 40%)" />
                 </TouchableOpacity>
             </View>
         </View>
@@ -45,16 +45,23 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 22,
         marginHorizontal: 30,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_400Regular'
     },
     tripItemStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'hsl(240, 83%, 93%)',
+        backgroundColor: 'hsl(215, 62%, 90%)',
         marginVertical: 15,
         marginHorizontal: 30,
         height: 85,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.5,
     },
     buttonContainer: {
         flexDirection: 'column',
