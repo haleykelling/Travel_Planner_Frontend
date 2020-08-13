@@ -14,7 +14,7 @@ const Event = ({event, deleteEvent}) => {
             <Text style={styles.detailsStyle}>{event.details}</Text>
             <Text style={styles.addressStyle}>{event.address}</Text>
             <TouchableOpacity onPress={() => deleteEvent(event)}>
-                <AntDesign name="delete" size={24} color="hsl(215, 30%, 40%)" />
+                <AntDesign name="delete" style={styles.iconStyle} />
             </TouchableOpacity>
         </View>
     );
@@ -23,7 +23,7 @@ const Event = ({event, deleteEvent}) => {
 const styles = StyleSheet.create({
     eventStyle: {
         marginHorizontal: 10,
-        marginVertical: 10,
+        marginBottom: 30,
         padding: 20,
         height: 230,
         backgroundColor: 'hsl(215, 62%, 90%)',
@@ -32,18 +32,30 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2},
         shadowRadius: 5,
         shadowOpacity: 0.5,
+        justifyContent: 'space-between'
     },
     headingStyle: {
         fontSize: 20,
         marginTop: 5,
-        fontFamily: 'Raleway_700Bold'
+        fontFamily: 'Raleway_700Bold',
+        color: 'hsl(215, 90%, 20%)'
     },
     detailsStyle: {
         fontSize: 18,
         marginVertical: 10,
-        fontFamily: 'Raleway_400Regular'
+        fontFamily: 'Raleway_400Regular',
+        color: 'hsl(215, 90%, 20%)'
+
     },
     addressStyle: {
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_700Bold',
+        fontSize: 16
+    },
+    iconStyle: {
+        fontSize: 24,
+        color: 'hsl(215, 30%, 40%)',
+        textAlign: 'right'
     }
 })
 
