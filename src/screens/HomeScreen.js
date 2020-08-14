@@ -3,8 +3,6 @@ import { Text, View, TouchableOpacity, ImageBackground, StyleSheet } from 'react
 import { useFonts, DancingScript_700Bold } from '@expo-google-fonts/dancing-script';
 import { Raleway_100Thin, Raleway_400Regular, Raleway_700Bold } from '@expo-google-fonts/raleway';
 import { AppLoading } from 'expo'
-import LoginForm from '../components/LoginForm';
-import SignupForm from '../components/SignupForm';
 
 const HomeScreen = ({navigation}) => {
     let [fontsLoaded] = useFonts({

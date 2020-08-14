@@ -30,7 +30,7 @@ const LoginScreen = ({navigation, setTokenValue, setToken}) => {
             <ImageBackground source={require('../../assets/boat_lake.jpg')} style={styles.backgroundStyle} >
                 <Text style={[styles.headingStyle, { fontFamily: 'DancingScript_700Bold' }]}>Wanderlust</Text>
                 <TouchableOpacity onPress={() => setShowForms(true)} >
-                    <Text style={styles.textStyle}>plan your next adventure</Text>
+                    <Text style={styles.textStyle}>login to start planning</Text>
                 </TouchableOpacity>
                 {showForms && login &&
                     <LoginForm

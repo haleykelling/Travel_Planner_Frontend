@@ -16,10 +16,13 @@ const TripScreen = ({navigation, tokenValue}) => {
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     useEffect(() => {
-        console.log('token', tokenValue)
-        fetch(tripsUrl)
+        fetch(tripsUrl, {
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            }
+        })
             .then(response => response.json())
-            .then(result => setTrips(result))
+            .then(setTrips)
     }, [])
 
 
@@ -29,7 +32,8 @@ const TripScreen = ({navigation, tokenValue}) => {
         fetch(tripsUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenValue}`
             },
             body: JSON.stringify({trip: trip})
         })
@@ -55,7 +59,8 @@ const TripScreen = ({navigation, tokenValue}) => {
         fetch(`${tripsUrl}/${id}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenValue}`
             },
             body: JSON.stringify({trip: dataToEdit})
         })
@@ -67,7 +72,12 @@ const TripScreen = ({navigation, tokenValue}) => {
         const new_trips = trips.filter(trip => trip.id !== id)
         setTrips(new_trips)
         
-        fetch(`${tripsUrl}/${id}`, {method: 'DELETE'})
+        fetch(`${tripsUrl}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            }
+        })
     }
 
     return (

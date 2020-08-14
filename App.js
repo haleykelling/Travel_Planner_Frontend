@@ -1,6 +1,6 @@
 import { StatusBar, setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -26,7 +26,6 @@ export default function App() {
         } else {
           setToken(false)
         }
-
       })    
       .catch(() => setToken(false))
   }
@@ -34,6 +33,14 @@ export default function App() {
   useEffect(() => {
     getData()
   }, [])
+
+  const logout = () => {
+    AsyncStorage.removeItem('token')
+      .then(() => {
+        setToken(false)
+        setTokenValue('')
+      })
+  }
 
   const loginNavigation = (
     <Stack.Navigator>
@@ -44,9 +51,20 @@ export default function App() {
   const userNavigation = (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Trip">{(props) => <TripScreen {...props} tokenValue={tokenValue} />}</Stack.Screen>
-      <Stack.Screen name="Itinerary" component={ItineraryScreen} />
-      <Stack.Screen name="Day" component={DayScreen} />
+      <Stack.Screen name="Trip" options={{headerRight: () => <Button onPress={logout} title="Logout" />}}>
+        {(props) => <TripScreen {...props} tokenValue={tokenValue} />}
+      </Stack.Screen>
+      <Stack.Screen 
+        name="Itinerary" 
+        component={ItineraryScreen} 
+        options={{headerRight: () => <Button onPress={logout} title="Logout" />}}
+      />
+      <Stack.Screen 
+        name="Day" 
+        component={DayScreen} 
+        options={{headerRight: () => <Button onPress={logout} 
+        title="Logout" />}}
+      />
     </Stack.Navigator>
   )
 

@@ -3,12 +3,13 @@ import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
-const loginUrl = 'http://localhost:3000/login'
+const loginUrl = 'https://stormy-fjord-63158.herokuapp.com/login'
 
 const LoginForm = ({toggleForm, setToken, setTokenValue}) => {
     
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [alerts, setAlerts] = useState('')
 
     const handleSubmit = () => {
         const user = {
@@ -23,7 +24,14 @@ const LoginForm = ({toggleForm, setToken, setTokenValue}) => {
             },
             body: JSON.stringify({user})
         })
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(parsedResponse => {
+                        setAlerts(parsedResponse.error)
+                    })
+                }
+                return response.json()
+            })
             .then(result => {
                 storeData(result.token)
             })
@@ -60,12 +68,13 @@ const LoginForm = ({toggleForm, setToken, setTokenValue}) => {
                 autoCapitalize='none'
                 autoCorrect={false}
             ></TextInput>
-             <View style={styles.buttonContainer}>
+            {alerts !== '' ? <Text>{alerts}</Text> : null}
+            <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.buttonStyle} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonStyle} onPress={toggleForm}>
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                    <Text style={styles.buttonText}>New User?</Text>
                 </TouchableOpacity>
             </View>
         </View>
