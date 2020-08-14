@@ -33,7 +33,10 @@ const SignupForm = ({toggleForm}, setToken, setTokenValue) => {
                 return response.json()
             })
             .then(result => {
-                storeData(result.token)
+                if (result.token){
+                    setAlerts('')
+                    storeData(result.token)
+                }
             })
     }
 
@@ -49,7 +52,7 @@ const SignupForm = ({toggleForm}, setToken, setTokenValue) => {
     }
 
     return (
-        <View>
+        <View style={styles.formStyle}>
             <Text style={styles.headingStyle}>Sign Up</Text>
             <TextInput
                 style={styles.inputStyle} 
@@ -68,7 +71,7 @@ const SignupForm = ({toggleForm}, setToken, setTokenValue) => {
                 autoCapitalize='none'
                 autoCorrect={false}
             ></TextInput>
-            {alerts !== '' ? <Text>{alerts}</Text> : null}
+            {alerts !== '' ? <Text style={styles.alertStyle}>{alerts}</Text> : null}
              <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.buttonStyle} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Submit</Text>
@@ -82,26 +85,26 @@ const SignupForm = ({toggleForm}, setToken, setTokenValue) => {
 }
 
 const styles = StyleSheet.create({
+    formStyle: {
+        marginVertical: 50,
+        marginHorizontal: 30,
+        backgroundColor: 'hsla(0, 0%, 100%, 0.5)',
+        justifyContent: 'space-around'
+    },
     headingStyle: {
-        fontSize: 28,
+        fontSize: 30,
         alignSelf: 'center',
         marginVertical: 20,
         color: 'hsl(215, 90%, 20%)',
         fontFamily: 'Raleway_700Bold'
     },
-    textStyle: {
-        fontSize: 24,
-        color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'Raleway_400Regular'
-    },
     inputStyle: {
         fontSize: 24,
-        color: 'hsl(215, 90%, 20%)',
         fontFamily: 'Raleway_400Regular',
         marginVertical: 10,
         marginHorizontal: 30,
         padding: 10,
-        backgroundColor: 'hsl(215, 62%, 90%)',
+        backgroundColor: 'hsl(215, 62%, 95%)',
         borderRadius: 5,
         shadowColor: 'hsl(0, 0%, 40%)',
         shadowOffset: {width: 2, height: 2},
@@ -128,6 +131,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'Raleway_700Bold'
+    },
+    alertStyle: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontFamily: 'Raleway_700Bold',
+        color: 'hsl(215, 90%, 20%)',
+        marginVertical: 10
     }
 })
 
