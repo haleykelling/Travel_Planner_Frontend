@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -8,17 +9,19 @@ import AddTripForm from '../components/AddTripForm';
 
 const tripsUrl = 'https://stormy-fjord-63158.herokuapp.com/trips'
 
-const TripScreen = ({navigation}) => {
+const TripScreen = ({navigation, tokenValue}) => {
 
     const [trips, setTrips] = useState([])
     const [alerts, setAlerts] = useState('')
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     useEffect(() => {
+        console.log('token', tokenValue)
         fetch(tripsUrl)
             .then(response => response.json())
             .then(result => setTrips(result))
     }, [])
+
 
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 

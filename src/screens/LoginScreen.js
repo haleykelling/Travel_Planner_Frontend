@@ -6,13 +6,21 @@ import { AppLoading } from 'expo'
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 
-const HomeScreen = ({navigation}) => {
+const LoginScreen = ({navigation, setTokenValue, setToken}) => {
     let [fontsLoaded] = useFonts({
         DancingScript_700Bold,
         Raleway_100Thin,
         Raleway_400Regular,
         Raleway_700Bold
     });
+
+    const [login, setLogin] = useState(true)
+    const [showForms, setShowForms] = useState(false)
+
+    const toggleForm = () => {
+        setLogin(!login)
+    }
+
     
     if (!fontsLoaded){
         return <AppLoading />
@@ -21,9 +29,23 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.viewStyle}>
             <ImageBackground source={require('../../assets/boat_lake.jpg')} style={styles.backgroundStyle} >
                 <Text style={[styles.headingStyle, { fontFamily: 'DancingScript_700Bold' }]}>Wanderlust</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Trip')} >
+                <TouchableOpacity onPress={() => setShowForms(true)} >
                     <Text style={styles.textStyle}>plan your next adventure</Text>
                 </TouchableOpacity>
+                {showForms && login &&
+                    <LoginForm
+                        toggleForm={toggleForm} 
+                        setToken={setToken}
+                        setTokenValue={setTokenValue}
+                    />
+                }
+                {showForms && !login &&
+                    <SignupForm 
+                        toggleForm={toggleForm} 
+                        setToken={setToken}
+                        setTokenValue={setTokenValue}    
+                    />
+                }
             </ImageBackground>
         </View>
     )}
@@ -55,4 +77,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomeScreen;
+export default LoginScreen;
