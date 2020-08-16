@@ -1,0 +1,143 @@
+import React, {useState} from 'react';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage'
+
+const loginUrl = 'https://stormy-fjord-63158.herokuapp.com/login'
+
+const LoginForm = ({toggleForm, setToken, setTokenValue}) => {
+    
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [alerts, setAlerts] = useState('')
+
+    const handleSubmit = () => {
+        const user = {
+            username,
+            password
+        }
+
+        fetch(loginUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({user})
+        })
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(parsedResponse => {
+                        setAlerts(parsedResponse.error)
+                    })
+                }
+                return response.json()
+            })
+            .then(result => {
+                if (result.token){
+                    setAlerts('')
+                    storeData(result.token)
+                }
+            })
+    }
+
+    const storeData = async(value) => {
+        try {
+            await AsyncStorage.setItem('token', value)
+            setTokenValue(value)
+            setToken(true)
+        } catch(e) {
+            console.error(e)
+            setToken(false)
+        }
+    }
+    
+    return (
+        <View style={styles.formStyle}>
+            <Text style={styles.headingStyle}>Log In</Text>
+            <TextInput
+                style={styles.inputStyle} 
+                placeholder="Username"
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize='none'
+                autoCorrect={false}
+            ></TextInput>
+            <TextInput
+                style={styles.inputStyle} 
+                placeholder="Password"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
+                autoCapitalize='none'
+                autoCorrect={false}
+            ></TextInput>
+            {alerts !== '' ? <Text style={styles.alertStyle}>{alerts}</Text> : null}
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.buttonStyle} onPress={handleSubmit}>
+                    <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonStyle} onPress={toggleForm}>
+                    <Text style={styles.buttonText}>New User?</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    formStyle: {
+        marginVertical: 50,
+        marginHorizontal: 30,
+        backgroundColor: 'hsla(0, 0%, 100%, 0.7)',
+        justifyContent: 'space-around'
+    },
+    headingStyle: {
+        fontSize: 30,
+        alignSelf: 'center',
+        marginVertical: 20,
+        color: 'hsl(215, 90%, 20%)',
+        fontFamily: 'Raleway_700Bold'
+    },
+    inputStyle: {
+        fontSize: 24,
+        fontFamily: 'Raleway_400Regular',
+        marginVertical: 10,
+        marginHorizontal: 30,
+        padding: 10,
+        backgroundColor: 'hsl(215, 62%, 95%)',
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.5,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    buttonStyle: {
+        backgroundColor: 'hsl(215, 30%, 40%)',
+        marginVertical: 15,
+        padding: 12,
+        width: 130,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        textAlign: 'center',
+        fontFamily: 'Raleway_700Bold'
+    },
+    alertStyle: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontFamily: 'Raleway_700Bold',
+        color: 'hsl(215, 90%, 20%)',
+        marginVertical: 10
+    }
+})
+
+export default LoginForm;

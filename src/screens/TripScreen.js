@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -8,17 +9,22 @@ import AddTripForm from '../components/AddTripForm';
 
 const tripsUrl = 'https://stormy-fjord-63158.herokuapp.com/trips'
 
-const TripScreen = ({navigation}) => {
+const TripScreen = ({navigation, tokenValue}) => {
 
     const [trips, setTrips] = useState([])
     const [alerts, setAlerts] = useState('')
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     useEffect(() => {
-        fetch(tripsUrl)
+        fetch(tripsUrl, {
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            }
+        })
             .then(response => response.json())
-            .then(result => setTrips(result))
+            .then(setTrips)
     }, [])
+
 
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 
@@ -26,7 +32,8 @@ const TripScreen = ({navigation}) => {
         fetch(tripsUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenValue}`
             },
             body: JSON.stringify({trip: trip})
         })
@@ -52,7 +59,8 @@ const TripScreen = ({navigation}) => {
         fetch(`${tripsUrl}/${id}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenValue}`
             },
             body: JSON.stringify({trip: dataToEdit})
         })
@@ -64,7 +72,12 @@ const TripScreen = ({navigation}) => {
         const new_trips = trips.filter(trip => trip.id !== id)
         setTrips(new_trips)
         
-        fetch(`${tripsUrl}/${id}`, {method: 'DELETE'})
+        fetch(`${tripsUrl}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            }
+        })
     }
 
     return (
