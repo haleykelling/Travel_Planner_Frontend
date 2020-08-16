@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet} from 'react-native';
-import FormatTime from '../helpers/FormatTime'
+import Modal from 'react-native-modal';
+import FormatTime from '../helpers/FormatTime';
+import EditDayForm from './EditDayForm';
 
-const Day = ({day, index, trip, navigation}) => {
+const Day = ({day, index, trip, navigation, editDay}) => {
     
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    
+    const toggleModal = () => setIsModalVisible(!isModalVisible)
+
     const pickPhoto = () => {
         if (trip.name === "Honeymoon to Greece"){
             return require('../../assets/greece.jpg')
@@ -27,6 +33,12 @@ const Day = ({day, index, trip, navigation}) => {
                         : <Text style={styles.cityHeadingStyle}>
                             {day.start_city} to {day.end_city}
                         </Text>             
+                    }
+                    {day.start_city 
+                        ? null 
+                        : <TouchableOpacity onPress={toggleModal}>
+                            <Text style ={styles.infoText}>Click here to add locations to your days!</Text>
+                        </TouchableOpacity>
                     }
                     {day.transportations.length === 0 && day.activities.length === 0 
                         ? <Text style ={styles.infoText}>Click here to add events to your itinerary!</Text>
@@ -63,6 +75,17 @@ const Day = ({day, index, trip, navigation}) => {
                 <View>
                     <Image source={pickPhoto()} style={styles.imageStyle}/>
                 </View>
+                <Modal 
+                    isVisible={isModalVisible}
+                    backdropColor='white'
+                    backdropOpacity={0.9}
+                >
+                    <EditDayForm 
+                        editDay={editDay} 
+                        toggleModal={toggleModal} 
+                        dayId={day.id}
+                    />
+                </Modal>
             </TouchableOpacity>
         </View>
     );
@@ -109,7 +132,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Raleway_400Regular',
         color: 'hsl(215, 90%, 20%)',
         fontSize: 16,
-        lineHeight: 20
+        lineHeight: 20,
+        marginVertical: 10
     }
 })
 

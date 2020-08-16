@@ -60,7 +60,22 @@ const ItineraryScreen = ({route, navigation}) => {
             dayToChange.activities = [...newActivities]
         }
         setDays([...daysNotChanging, dayToChange])
+    }
 
+    const editDay = (day, id) => {
+        console.log('day', day, 'id', id)
+        fetch(`${daysUrl}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({day: day})
+        })
+            .then(response => response.json())
+            .then(result => {
+                const daysNotChanging = days.filter(day => day.id !== id)
+                setDays([...daysNotChanging, result])
+            })
     }
    
     return (
@@ -76,7 +91,7 @@ const ItineraryScreen = ({route, navigation}) => {
                         index={index} 
                         trip={trip}
                         navigation={navigation}
-                        updateDays={updateDays} 
+                        editDay={editDay}
                         />
                 }}
                 scrollIndicatorInsets={{ right: 1 }}
