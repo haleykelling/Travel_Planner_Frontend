@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Text, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Day from '../components/Day';
-import Map from '../components/Map';
-import { updateLocale } from 'moment';
 
 
 const daysUrl = 'https://stormy-fjord-63158.herokuapp.com/days'
@@ -68,6 +66,7 @@ const ItineraryScreen = ({route, navigation}) => {
     return (
         <>
         <Text style={styles.headingStyle}>{trip.name}</Text>
+        <Button title="See Map" onPress={() => navigation.navigate('Map')} />
             <FlatList 
                 data={sortedDays()}
                 keyExtractor={(day) => day.id.toString()}

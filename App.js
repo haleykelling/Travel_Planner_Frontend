@@ -9,6 +9,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import TripScreen from './src/screens/TripScreen';
 import ItineraryScreen from './src/screens/ItineraryScreen';
 import DayScreen from './src/screens/DayScreen';
+import MapScreen from './src/screens/MapScreen';
 
 const Stack = createStackNavigator()
 
@@ -62,6 +63,12 @@ export default function App() {
       <Stack.Screen 
         name="Day" 
         component={DayScreen} 
+        options={{headerRight: () => <Button onPress={logout} 
+        title="Logout" />}}
+      />
+      <Stack.Screen 
+        name="Map" 
+        component={MapScreen}
         options={{headerRight: () => <Button onPress={logout} 
         title="Logout" />}}
       />
