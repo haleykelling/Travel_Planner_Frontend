@@ -83,6 +83,7 @@ const TripScreen = ({navigation, tokenValue}) => {
     return (
         <>
             <Text style={styles.headingStyle}>Upcoming Trips</Text>
+            {trips ?
             <FlatList 
                 style={styles.listStyle}
                 data={trips}
@@ -96,6 +97,8 @@ const TripScreen = ({navigation, tokenValue}) => {
                 }}
                 keyExtractor={(trip) => trip.id.toString()}
             />
+            : null
+            }
             <TouchableOpacity style={styles.buttonStyle} onPress={toggleModal}>
                 <Text style={styles.textStyle}>Add a New Trip</Text>
                 <Ionicons style={styles.iconStyle} name="ios-add"  />

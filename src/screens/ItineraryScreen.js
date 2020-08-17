@@ -63,7 +63,7 @@ const ItineraryScreen = ({route, navigation}) => {
     }
 
     const editDay = (day, id) => {
-        console.log('day', day, 'id', id)
+        
         fetch(`${daysUrl}/${id}`, {
             method: 'PATCH',
             headers: {
@@ -81,7 +81,7 @@ const ItineraryScreen = ({route, navigation}) => {
     return (
         <>
         <Text style={styles.headingStyle}>{trip.name}</Text>
-        <Button title="See Map" onPress={() => navigation.navigate('Map')} />
+        <Button title="See Map" onPress={() => navigation.navigate('Map', {days: days, trip: trip})} />
             <FlatList 
                 data={sortedDays()}
                 keyExtractor={(day) => day.id.toString()}

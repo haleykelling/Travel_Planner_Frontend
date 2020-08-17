@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
+import {FontAwesome} from '@expo/vector-icons';
 import FormatTime from '../helpers/FormatTime';
 import EditDayForm from './EditDayForm';
 
 const Day = ({day, index, trip, navigation, editDay}) => {
-    
+
     const [isModalVisible, setIsModalVisible] = useState(false)
     
     const toggleModal = () => setIsModalVisible(!isModalVisible)
@@ -29,10 +30,20 @@ const Day = ({day, index, trip, navigation, editDay}) => {
             >
                 <View style={styles.infoStyle}>
                     {day.start_city === day.end_city 
-                        ? <Text style={styles.cityHeadingStyle}>{day.start_city}</Text>
-                        : <Text style={styles.cityHeadingStyle}>
-                            {day.start_city} to {day.end_city}
-                        </Text>             
+                        ? <View style={styles.cityHeadingContainer}>
+                            <Text style={styles.cityHeadingStyle}>{day.start_city}</Text>
+                            <TouchableOpacity onPress={toggleModal}>
+                                <FontAwesome name="edit" style={styles.iconStyle} />
+                            </TouchableOpacity>    
+                        </View>
+                        : <View style={styles.cityHeadingContainer}>
+                            <Text style={styles.cityHeadingStyle}>
+                                {day.start_city} to {day.end_city}
+                            </Text> 
+                            <TouchableOpacity onPress={toggleModal}>
+                                <FontAwesome name="edit" style={styles.iconStyle} />
+                            </TouchableOpacity>  
+                        </View>            
                     }
                     {day.start_city 
                         ? null 
@@ -114,8 +125,15 @@ const styles = StyleSheet.create({
     cityHeadingStyle: {
         fontSize: 18,
         marginVertical: 10,
+        marginRight: 10,
         fontFamily: 'Raleway_700Bold',
-        color: 'hsl(215, 90%, 20%)'
+        color: 'hsl(215, 90%, 20%)',
+    },
+    cityHeadingContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        width: 210
     },
     infoStyle: {
         flex: 3,
@@ -124,7 +142,7 @@ const styles = StyleSheet.create({
     },
     imageStyle: {
         flex: 1,
-        width: 160,
+        width: 150,
         borderBottomRightRadius: 5,
         borderTopRightRadius: 5,
     },
@@ -134,6 +152,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 20,
         marginVertical: 10
+    },
+    iconStyle: {
+        fontSize: 20,
+        color: 'hsl(215, 30%, 40%)'
     }
 })
 
