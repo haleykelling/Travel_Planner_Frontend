@@ -65,7 +65,8 @@ const Day = ({day, index, trip, navigation, editDay}) => {
                                     </Text>
                                 )    
                             }}
-                            listKey={(transportation) => transportation.id.toString()}
+                            listKey={transportation => transportation.id.toString()}
+                            keyExtractor={item => item.id.toString()}
                         ></FlatList>
                         <FlatList
                             data={day.activities}
@@ -78,7 +79,8 @@ const Day = ({day, index, trip, navigation, editDay}) => {
                                     </Text>
                                 )    
                             }}
-                            listKey={(activity) => activity.id.toString()}
+                            listKey={activity => activity.id.toString()}
+                            keyExtractor={item => item.id.toString()}
                         ></FlatList>
                         </>
                     }

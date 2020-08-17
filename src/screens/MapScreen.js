@@ -4,18 +4,18 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 const MapScreen = ({route}) => {
     const {days, trip} = route.params
-    const [initialRegion, setInitialRegion] = useState({})
+    const [region, setRegion] = useState({})
 
     useEffect(() => {
         if(trip.name === "Honeymoon to Greece"){
-            setInitialRegion({
+            setRegion({
                 latitude: 37.2228,
                 longitude: 24.4395,
                 latitudeDelta: 2,
                 longitudeDelta: 3
             })
         }else if(trip.name === "Trip to Yellowstone"){
-            setInitialRegion({
+            setRegion({
                 latitude: 43.4799,
                 longitude: -110.7624,
                 latitudeDelta: 4,
@@ -25,7 +25,7 @@ const MapScreen = ({route}) => {
     }, [])
 
     const dayCoordinates = days.map(day => {
-        return {latitude: day.start_latitude, longitude: day.start_longitude, id: day.id}
+        return {latitude: day.start_latitude, longitude: day.start_longitude, id: day.id, title: `Stay in ${day.start_city}`}
     })
 
     const activityMarkers = () => {
@@ -33,19 +33,34 @@ const MapScreen = ({route}) => {
         days.forEach(day => {
             allActivities = allActivities.concat(day.activities)  
         })
-        return allActivities.map(activity => {
+        return allActivities.map((activity, index) => {
             return <Marker 
-                key={activity.id.toString()} 
+                key={(index + 215).toString()}
+                title={activity.name}
                 coordinate={{latitude: activity.latitude, longitude: activity.longitude}} 
+            />
+        })
+    }
+    const transportationMarkers = () => {
+        let allTransportations = []
+        days.forEach(day => {
+            allTransportations = allTransportations.concat(day.transportations)  
+        })
+
+        return allTransportations.map((transportation, index) => {
+            return <Marker 
+                key={(index + 115).toString()}
+                title={transportation.name}
+                coordinate={{latitude: transportation.latitude, longitude: transportation.longitude}} 
             />
         })
     }
 
     const createMarkers = () => {
-        console.log(activityMarkers())
         return dayCoordinates.map(coordinate => {
             return <Marker 
                 key={coordinate.id.toString()} 
+                title={coordinate.title}
                 coordinate={{latitude: coordinate.latitude, longitude: coordinate.longitude}} 
             />
         })
@@ -54,11 +69,12 @@ const MapScreen = ({route}) => {
     return (
         <MapView 
             style={{flex: 1}}
-            initialRegion={initialRegion}
+            region={region}
             provider={PROVIDER_GOOGLE}
         >
             {createMarkers()}
             {activityMarkers()}
+            {transportationMarkers()}
         </MapView>
     );
 }
