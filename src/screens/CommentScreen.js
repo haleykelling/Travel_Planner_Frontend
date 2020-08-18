@@ -1,16 +1,32 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import Comment from '../components/Comment'
+import Comment from '../components/Comment';
+import Modal from 'react-native-modal';
+import AddComment from '../components/AddComment'
 
 const CommentScreen = ({route}) => {
     const {day} = route.params
     const [showAddComment, setShowAddComment] = useState(false)
 
     const toggleShowAddComment = () => setShowAddComment(!showAddComment)
+
+    const addComment = (comment) => {
+        console.log(comment)
+    }
     
     return (
         <>
-            
+            <Modal
+                isVisible={showAddComment}
+                backdropColor='white'
+                backdropOpacity={0.9}
+            >
+                <AddComment 
+                    addComment={addComment}
+                    toggleModal={toggleShowAddComment}
+                    day={day}
+                />
+            </Modal>
             <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowAddComment}>
                 <Text style={styles.buttonText}>Add Comment</Text>
             </TouchableOpacity>
