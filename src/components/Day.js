@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet} from 'react-native';
-import FormatTime from '../helpers/FormatTime'
+import Modal from 'react-native-modal';
+import {FontAwesome} from '@expo/vector-icons';
+import FormatTime from '../helpers/FormatTime';
+import EditDayForm from './EditDayForm';
 
-const Day = ({day, index, trip, navigation}) => {
+const Day = ({day, index, trip, navigation, editDay}) => {
+
+    const [isModalVisible, setIsModalVisible] = useState(false)
     
+    const toggleModal = () => setIsModalVisible(!isModalVisible)
+
     const pickPhoto = () => {
         if (trip.name === "Honeymoon to Greece"){
             return require('../../assets/greece.jpg')
@@ -23,10 +30,26 @@ const Day = ({day, index, trip, navigation}) => {
             >
                 <View style={styles.infoStyle}>
                     {day.start_city === day.end_city 
-                        ? <Text style={styles.cityHeadingStyle}>{day.start_city}</Text>
-                        : <Text style={styles.cityHeadingStyle}>
-                            {day.start_city} to {day.end_city}
-                        </Text>             
+                        ? <View style={styles.cityHeadingContainer}>
+                            <Text style={styles.cityHeadingStyle}>{day.start_city}</Text>
+                            <TouchableOpacity onPress={toggleModal}>
+                                <FontAwesome name="edit" style={styles.iconStyle} />
+                            </TouchableOpacity>    
+                        </View>
+                        : <View style={styles.cityHeadingContainer}>
+                            <Text style={styles.cityHeadingStyle}>
+                                {day.start_city} to {day.end_city}
+                            </Text> 
+                            <TouchableOpacity onPress={toggleModal}>
+                                <FontAwesome name="edit" style={styles.iconStyle} />
+                            </TouchableOpacity>  
+                        </View>            
+                    }
+                    {day.start_city 
+                        ? null 
+                        : <TouchableOpacity onPress={toggleModal}>
+                            <Text style ={styles.infoText}>Click here to add locations to your days!</Text>
+                        </TouchableOpacity>
                     }
                     {day.transportations.length === 0 && day.activities.length === 0 
                         ? <Text style ={styles.infoText}>Click here to add events to your itinerary!</Text>
@@ -42,7 +65,8 @@ const Day = ({day, index, trip, navigation}) => {
                                     </Text>
                                 )    
                             }}
-                            listKey={(transportation) => transportation.id.toString()}
+                            listKey={transportation => transportation.id.toString()}
+                            keyExtractor={item => item.id.toString()}
                         ></FlatList>
                         <FlatList
                             data={day.activities}
@@ -55,7 +79,8 @@ const Day = ({day, index, trip, navigation}) => {
                                     </Text>
                                 )    
                             }}
-                            listKey={(activity) => activity.id.toString()}
+                            listKey={activity => activity.id.toString()}
+                            keyExtractor={item => item.id.toString()}
                         ></FlatList>
                         </>
                     }
@@ -63,6 +88,17 @@ const Day = ({day, index, trip, navigation}) => {
                 <View>
                     <Image source={pickPhoto()} style={styles.imageStyle}/>
                 </View>
+                <Modal 
+                    isVisible={isModalVisible}
+                    backdropColor='white'
+                    backdropOpacity={0.9}
+                >
+                    <EditDayForm 
+                        editDay={editDay} 
+                        toggleModal={toggleModal} 
+                        dayId={day.id}
+                    />
+                </Modal>
             </TouchableOpacity>
         </View>
     );
@@ -91,8 +127,15 @@ const styles = StyleSheet.create({
     cityHeadingStyle: {
         fontSize: 18,
         marginVertical: 10,
+        marginRight: 10,
         fontFamily: 'Raleway_700Bold',
-        color: 'hsl(215, 90%, 20%)'
+        color: 'hsl(215, 90%, 20%)',
+    },
+    cityHeadingContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        width: 210
     },
     infoStyle: {
         flex: 3,
@@ -101,7 +144,7 @@ const styles = StyleSheet.create({
     },
     imageStyle: {
         flex: 1,
-        width: 160,
+        width: 150,
         borderBottomRightRadius: 5,
         borderTopRightRadius: 5,
     },
@@ -109,7 +152,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Raleway_400Regular',
         color: 'hsl(215, 90%, 20%)',
         fontSize: 16,
-        lineHeight: 20
+        lineHeight: 20,
+        marginVertical: 10
+    },
+    iconStyle: {
+        fontSize: 20,
+        color: 'hsl(215, 30%, 40%)'
     }
 })
 

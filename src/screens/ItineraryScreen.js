@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Text, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Day from '../components/Day';
-import Map from '../components/Map';
-import { updateLocale } from 'moment';
 
 
 const daysUrl = 'https://stormy-fjord-63158.herokuapp.com/days'
@@ -62,12 +60,28 @@ const ItineraryScreen = ({route, navigation}) => {
             dayToChange.activities = [...newActivities]
         }
         setDays([...daysNotChanging, dayToChange])
+    }
 
+    const editDay = (day, id) => {
+        
+        fetch(`${daysUrl}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({day: day})
+        })
+            .then(response => response.json())
+            .then(result => {
+                const daysNotChanging = days.filter(day => day.id !== id)
+                setDays([...daysNotChanging, result])
+            })
     }
    
     return (
         <>
         <Text style={styles.headingStyle}>{trip.name}</Text>
+        <Button title="See Map" onPress={() => navigation.navigate('Map', {days: days, trip: trip})} />
             <FlatList 
                 data={sortedDays()}
                 keyExtractor={(day) => day.id.toString()}
@@ -77,7 +91,7 @@ const ItineraryScreen = ({route, navigation}) => {
                         index={index} 
                         trip={trip}
                         navigation={navigation}
-                        updateDays={updateDays} 
+                        editDay={editDay}
                         />
                 }}
                 scrollIndicatorInsets={{ right: 1 }}

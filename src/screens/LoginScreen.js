@@ -15,7 +15,6 @@ const LoginScreen = ({navigation, setTokenValue, setToken}) => {
     });
 
     const [login, setLogin] = useState(true)
-    const [showForms, setShowForms] = useState(false)
 
     const toggleForm = () => {
         setLogin(!login)
@@ -29,17 +28,14 @@ const LoginScreen = ({navigation, setTokenValue, setToken}) => {
         <View style={styles.viewStyle}>
             <ImageBackground source={require('../../assets/boat_lake.jpg')} style={styles.backgroundStyle} >
                 <Text style={[styles.headingStyle, { fontFamily: 'DancingScript_700Bold' }]}>Wanderlust</Text>
-                <TouchableOpacity onPress={() => setShowForms(true)} >
-                    <Text style={styles.textStyle}>login to start planning</Text>
-                </TouchableOpacity>
-                {showForms && login &&
+                {login &&
                     <LoginForm
                         toggleForm={toggleForm} 
                         setToken={setToken}
                         setTokenValue={setTokenValue}
                     />
                 }
-                {showForms && !login &&
+                {!login &&
                     <SignupForm 
                         toggleForm={toggleForm} 
                         setToken={setToken}

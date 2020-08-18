@@ -109,7 +109,6 @@ const DayScreen = ({route, navigation}) => {
             deleteFetch(`${transportationsUrl}/${event.id}`)
             updateBackButton(event, true)
         } else {
-            console.log('activity delete')
             const newActivities = activities.filter(activity => {
                 return activity.id !== event.id
             })
