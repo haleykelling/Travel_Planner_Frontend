@@ -87,7 +87,9 @@ const MapScreen = ({route}) => {
                     }}
                     query={{
                         key: GOOGLE_PLACES_API_KEY,
-                        language: 'en'
+                        language: 'en',
+                        location: `latitude=${region.latitude},longitude=${region.longitude}`,
+                        radius: '100,000'
                     }}
                     styles={{
                         textInputContainer: {
