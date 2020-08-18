@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { Text, StyleSheet, TouchableOpacity, Button, SectionList} from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, Button, SectionList} from 'react-native';
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import Event from '../components/Event';
 import AddEventForm from '../components/AddEventForm';
-import { updateLocale } from 'moment';
 
 const activitiesUrl = 'https://stormy-fjord-63158.herokuapp.com/activities'
 const transportationsUrl = 'https://stormy-fjord-63158.herokuapp.com/transportations'
@@ -123,6 +122,7 @@ const DayScreen = ({route, navigation}) => {
             method: 'DELETE'
         })
     }
+
     
     return (
         <>
@@ -148,10 +148,15 @@ const DayScreen = ({route, navigation}) => {
             />
             : null
             }
-            <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>Add Event</Text>
-                <Ionicons style={styles.iconStyle} name="ios-add"  />
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
+                    <Text style={styles.textStyle}>Add Event</Text>
+                    <Ionicons style={styles.iconStyle} name="ios-add"  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Comment', {day: day})} style={styles.buttonStyle}>
+                    <Text style={styles.textStyle}>Comments</Text>
+                </TouchableOpacity>
+            </View>
         </>
     );
 }
@@ -165,14 +170,19 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: 'white'
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
     buttonStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'hsl(215, 30%, 40%)',
         marginTop: 15,
         marginBottom: 50,
-        marginHorizontal: 30,
-        height: 85,
+        marginHorizontal: 5,
+        height: 70,
+        width: 180,
         borderRadius: 5,
         shadowColor: 'hsl(0, 0%, 40%)',
         shadowOffset: {width: 2, height: 2},
@@ -182,13 +192,13 @@ const styles = StyleSheet.create({
     iconStyle: {
         fontSize: 30,
         color: 'white',
-        marginTop: 27,
-        marginRight: 30
+        marginTop: 18,
+        marginRight: 15,
     },
     textStyle: {
         fontSize: 22,
         alignSelf: 'center',
-        marginLeft: 30,
+        marginLeft: 25,
         color: 'white',
         fontFamily: 'Raleway_700Bold'
     },

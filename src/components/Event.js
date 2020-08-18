@@ -14,7 +14,7 @@ const Event = ({event, deleteEvent}) => {
             case "History":
                 return <FontAwesome5 name="landmark" style={styles.largeIconStyle} />
             case "Food/Drink":
-                return <MaterialCommunityIcons name="food" size={36} color="hsl(215, 90%, 20%)" />
+                return <MaterialCommunityIcons name="food" size={34} color="hsl(215, 90%, 20%)" />
             case "Art/Culture":
                 return <FontAwesome5 name="paint-brush" style={styles.largeIconStyle} />
             case "General":

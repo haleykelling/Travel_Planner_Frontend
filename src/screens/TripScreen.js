@@ -85,7 +85,6 @@ const TripScreen = ({navigation, tokenValue}) => {
             <Text style={styles.headingStyle}>Upcoming Trips</Text>
             {trips ?
             <FlatList 
-                style={styles.listStyle}
                 data={trips}
                 renderItem={({item}) => {
                     return <Trip 

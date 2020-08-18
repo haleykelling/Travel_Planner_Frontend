@@ -79,7 +79,7 @@ const MapScreen = ({route}) => {
                 {activityMarkers()}
                 {transportationMarkers()}
             </MapView>
-            <View style={{position: 'absolute', width: 415}}>
+            {/* <View style={{position: 'absolute', width: 415}}>
                 <GooglePlacesAutocomplete 
                     placeholder='Search'
                     onPress={(data, details=null) => {
@@ -106,7 +106,7 @@ const MapScreen = ({route}) => {
                         },
                     }}
                 />
-            </View>
+            </View> */}
         </>
     );
 }
