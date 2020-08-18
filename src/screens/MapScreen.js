@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {GOOGLE_PLACES_API_KEY} from '@env'
 
 const MapScreen = ({route}) => {
     const {days, trip} = route.params
@@ -85,7 +86,7 @@ const MapScreen = ({route}) => {
                         console.log(data, details)
                     }}
                     query={{
-                        key: 'AIzaSyC46amfDUa2SLvG-sviGJG3eF0T-SuWPqA',
+                        key: GOOGLE_PLACES_API_KEY,
                         language: 'en'
                     }}
                     styles={{

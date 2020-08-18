@@ -18,10 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.flatiron.wanderlust",
-      "config": {
-        "googleMapsApiKey": "AIzaSyC46amfDUa2SLvG-sviGJG3eF0T-SuWPqA"
-      }
+      "bundleIdentifier": "com.flatiron.wanderlust"
     },
     "web": {
       "favicon": "./assets/favicon.png"
