@@ -82,20 +82,20 @@ const ItineraryScreen = ({route, navigation}) => {
         <>
         <Text style={styles.headingStyle}>{trip.name}</Text>
         <Button title="See Map" onPress={() => navigation.navigate('Map', {days: days, trip: trip})} />
-            <FlatList 
-                data={sortedDays()}
-                keyExtractor={(day) => day.id.toString()}
-                renderItem={({item, index}) => {
-                    return <Day 
-                        day={item} 
-                        index={index} 
-                        trip={trip}
-                        navigation={navigation}
-                        editDay={editDay}
-                        />
-                }}
-                scrollIndicatorInsets={{ right: 1 }}
-            />
+        <FlatList 
+            data={sortedDays()}
+            keyExtractor={(day) => day.id.toString()}
+            renderItem={({item, index}) => {
+                return <Day 
+                    day={item} 
+                    index={index} 
+                    trip={trip}
+                    navigation={navigation}
+                    editDay={editDay}
+                    />
+            }}
+            scrollIndicatorInsets={{ right: 1 }}
+        />
         </>
     );    
 }

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet} from 'react-
 import Modal from 'react-native-modal';
 import {FontAwesome} from '@expo/vector-icons';
 import FormatTime from '../helpers/FormatTime';
+import PickPhoto from '../helpers/PickPhoto';
 import EditDayForm from './EditDayForm';
 
 const Day = ({day, index, trip, navigation, editDay}) => {
@@ -10,14 +11,6 @@ const Day = ({day, index, trip, navigation, editDay}) => {
     const [isModalVisible, setIsModalVisible] = useState(false)
     
     const toggleModal = () => setIsModalVisible(!isModalVisible)
-
-    const pickPhoto = () => {
-        if (trip.name === "Honeymoon to Greece"){
-            return require('../../assets/greece.jpg')
-        } else if (trip.name === "Trip to Yellowstone"){
-            return require('../../assets/yellowstone.jpg')
-        }
-    }
 
     return (
         <View >
@@ -86,7 +79,7 @@ const Day = ({day, index, trip, navigation, editDay}) => {
                     }
                 </View>
                 <View>
-                    <Image source={pickPhoto()} style={styles.imageStyle}/>
+                    <Image source={PickPhoto(day)} style={styles.imageStyle}/>
                 </View>
                 <Modal 
                     isVisible={isModalVisible}
@@ -108,14 +101,14 @@ const styles = StyleSheet.create({
     dayStyle: {
         marginHorizontal: 10,
         marginVertical: 10,
-        height: 230,
+        height: 300,
         backgroundColor: 'hsl(215, 62%, 90%)',
         borderRadius: 5,
         shadowColor: 'hsl(0, 0%, 40%)',
         shadowOffset: {width: 2, height: 2},
         shadowRadius: 5,
         shadowOpacity: 0.5,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     headingStyle: {
         fontSize: 20,
