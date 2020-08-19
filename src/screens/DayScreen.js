@@ -26,11 +26,9 @@ const DayScreen = ({route, navigation}) => {
     const toggleAccomodationsModal = () => setAccomodationsModal(!accomodationsModal)
 
     const activitiesSorted = () => {
-        console.log(activities)
         return activities.sort((a, b) => a.start_time - b.start_time)
     }
     const transportationsSorted = () => {
-        console.log(transportations)
         return transportations.sort((a, b) => a.end_time - b.start_time)
     }
 
@@ -222,17 +220,25 @@ const DayScreen = ({route, navigation}) => {
                 />
             }
             <View style={styles.buttonContainer}>
-                {showAccomodations 
-                    ? <TouchableOpacity onPress={toggleAccomodationsModal} style={styles.buttonStyle}>
-                        <Text style={styles.textStyle}>Add Accomodation</Text>
+                {showAccomodations &&
+                    <TouchableOpacity onPress={toggleAccomodationsModal} style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}>Accomodation</Text>
                         <Ionicons style={styles.iconStyle} name="ios-add"  />
                     </TouchableOpacity>
-                    : <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
-                        <Text style={styles.textStyle}>Add Event</Text>
+                }    
+                {showActivities && 
+                    <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}>Activity</Text>
                         <Ionicons style={styles.iconStyle} name="ios-add"  />
                     </TouchableOpacity>
                 }
-                <TouchableOpacity onPress={() => navigation.navigate('Comment', {day: day})} style={styles.buttonStyle}>
+                {showTransportations && 
+                    <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}>Transportation</Text>
+                        <Ionicons style={styles.iconStyle} name="ios-add"  />
+                    </TouchableOpacity>
+                }
+                <TouchableOpacity onPress={() => navigation.navigate('Comment', {day: day})} style={styles.commentButtonStyle}>
                     <Text style={styles.textStyle}>Comments</Text>
                 </TouchableOpacity>
             </View>
@@ -261,7 +267,22 @@ const styles = StyleSheet.create({
         marginBottom: 50,
         marginHorizontal: 5,
         height: 70,
-        width: 180,
+        width: 220,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 40%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.8,
+    },
+    commentButtonStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: 'hsl(215, 30%, 40%)',
+        marginTop: 15,
+        marginBottom: 50,
+        marginHorizontal: 5,
+        height: 70,
+        width: 155,
         borderRadius: 5,
         shadowColor: 'hsl(0, 0%, 40%)',
         shadowOffset: {width: 2, height: 2},
@@ -277,7 +298,7 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 22,
         alignSelf: 'center',
-        marginLeft: 25,
+        marginLeft: 20,
         color: 'white',
         fontFamily: 'Raleway_700Bold'
     },

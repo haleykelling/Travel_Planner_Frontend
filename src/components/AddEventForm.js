@@ -98,6 +98,7 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
                 placeholder="Name of Event"
                 value={name}
                 onChangeText={setName}
+                autoCorrect={false}
                 />
             <TextInput 
                 style={styles.inputStyle} 
@@ -110,6 +111,7 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
                 placeholder="Address"
                 value={address}
                 onChangeText={setAddress}
+                autoCorrect={false}
                 />
             <TouchableOpacity 
                 style={styles.buttonStyle} 
@@ -128,6 +130,7 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
                 display='default'
                 textColor='hsl(278, 48%, 18%)'
                 onChange={onChangeStart}
+                minuteInterval={15}
                 />
                 )}
             <TouchableOpacity 
@@ -148,6 +151,7 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
                 display='default'
                 textColor='hsl(278, 48%, 18%)'
                 onChange={onChangeEnd}
+                minuteInterval={15}
                 />
                 )}
             {/* {alerts !== '' ? <Text>{alerts}</Text> : null} */}

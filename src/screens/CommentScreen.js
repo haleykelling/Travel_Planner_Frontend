@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import Comment from '../components/Comment';
 import Modal from 'react-native-modal';
 import AddComment from '../components/AddComment'
 
+const commentsUrl = 'https://stormy-fjord-63158.herokuapp.com/comments'
+
 const CommentScreen = ({route}) => {
     const {day} = route.params
-    const [showAddComment, setShowAddComment] = useState(false)
 
+    const [comments, setComments] = useState(day.comments)
+    const [showAddComment, setShowAddComment] = useState(false)
+    
     const toggleShowAddComment = () => setShowAddComment(!showAddComment)
 
-    const addComment = (comment) => {
-        console.log(comment)
+    const addComment = (comment, id) => {
+        fetch(commentsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({comment: {text: comment, day_id: id}})
+        })
+        .then(response => response.json())
+        .then(result => setComments([...comments, result]))    
+        .catch(error => console.error(error))
     }
     
     return (
@@ -32,7 +45,7 @@ const CommentScreen = ({route}) => {
             </TouchableOpacity>
             <FlatList 
                 style={styles.listStyle}
-                data={day.comments}
+                data={comments}
                 renderItem={({item}) => {
                     return <Comment 
                         comment={item} 
@@ -51,9 +64,9 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 5,
         shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.8,
+        shadowOffset: {width: 1, height: 2},
+        shadowRadius: 3,
+        shadowOpacity: 0.5,
         alignSelf: 'center'
     },
     buttonText: {

@@ -5,10 +5,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const AddComment = ({toggleModal, day, addComment}) => {
         
     const [text, setText] = useState('')
-  
     
     const handleSubmit = () => {
-        addComment()
+        addComment(text, day.id)
+        toggleModal()
     }
 
 
@@ -29,7 +29,7 @@ const AddComment = ({toggleModal, day, addComment}) => {
             />
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeButton} onPress={handleSubmit}>
-                    <Text style={styles.closeText}>Create</Text>
+                    <Text style={styles.closeText}>Submit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
                     <Text style={styles.closeText}>Exit</Text>

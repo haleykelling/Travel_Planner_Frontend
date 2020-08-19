@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         shadowColor: 'hsl(0, 0%, 40%)',
         shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.8,
+        shadowRadius: 4,
+        shadowOpacity: 0.3,
     }
 })
 
