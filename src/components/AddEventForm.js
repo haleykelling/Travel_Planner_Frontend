@@ -10,14 +10,12 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
     const [address, setAddress] = useState('')
     const [startTime, setStartTime] = useState(new Date())
     const [endTime, setEndTime] = useState(new Date())
-    
     const [showStartTime, setShowStartTime] = useState(false)
     const [showEndTime, setShowEndTime] = useState(false)
 
     const toggleShowStartTime = () => setShowStartTime(!showStartTime)
     const toggleShowEndTime = () => setShowEndTime(!showEndTime)
 
-    
     const onChangeStart = (event, selectedTime) => {
         setStartTime(selectedTime)
     }
@@ -154,7 +152,6 @@ const AddEventForm = ({toggleModal, addActivity, addTransportation, day}) => {
                 minuteInterval={15}
                 />
                 )}
-            {/* {alerts !== '' ? <Text>{alerts}</Text> : null} */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeButton} onPress={handleSubmit}>
                     <Text style={styles.closeText}>Create</Text>

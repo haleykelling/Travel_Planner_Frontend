@@ -9,8 +9,12 @@ import EditDayForm from './EditDayForm';
 const Day = ({day, index, trip, navigation, editDay}) => {
 
     const [isModalVisible, setIsModalVisible] = useState(false)
-    
     const toggleModal = () => setIsModalVisible(!isModalVisible)
+
+    const sortActivities = () => {
+        const allActivities = day.activities.concat(day.transportations)
+        return allActivities.sort((a, b) => a.start_time - b.start_time)
+    }
 
     return (
         <View >
@@ -19,7 +23,7 @@ const Day = ({day, index, trip, navigation, editDay}) => {
             </Text>
             <TouchableOpacity 
                 style={styles.dayStyle} 
-                onPress={() => navigation.navigate('Day', {day: day})}
+                onPress={() => navigation.navigate('Day', {day: day, trip: trip})}
             >
                 <View style={styles.infoStyle}>
                     {day.start_city === day.end_city 
@@ -46,9 +50,8 @@ const Day = ({day, index, trip, navigation, editDay}) => {
                     }
                     {day.transportations.length === 0 && day.activities.length === 0 
                         ? <Text style ={styles.infoText}>Click here to add events to your itinerary!</Text>
-                        : <> 
-                        <FlatList
-                            data={day.transportations}
+                        : <FlatList
+                            data={sortActivities()}
                             renderItem={({item}) => {
                                 return (
                                     <Text style={styles.infoText}>
@@ -58,24 +61,8 @@ const Day = ({day, index, trip, navigation, editDay}) => {
                                     </Text>
                                 )    
                             }}
-                            listKey={transportation => transportation.id.toString()}
                             keyExtractor={item => item.id.toString()}
-                        ></FlatList>
-                        <FlatList
-                            data={day.activities}
-                            renderItem={({item}) => {
-                                return (
-                                    <Text style={styles.infoText}>
-                                        {item.start_time ? FormatTime(item.start_time) : null} 
-                                        {item.end_time ? " - " + FormatTime(item.end_time) + ":" : ":"}  
-                                        {" " + item.name}
-                                    </Text>
-                                )    
-                            }}
-                            listKey={activity => activity.id.toString()}
-                            keyExtractor={item => item.id.toString()}
-                        ></FlatList>
-                        </>
+                        />
                     }
                 </View>
                 <View>
