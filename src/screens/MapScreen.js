@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {GOOGLE_PLACES_API_KEY} from '@env'
 
 const MapScreen = ({route}) => {
     const {days, trip} = route.params
-    const [region, setRegion] = useState({})
+    const [region, setRegion] = useState({
+        latitude: 37.2228,
+        longitude: 24.4395,
+        latitudeDelta: 2,
+        longitudeDelta: 3
+    })
 
     useEffect(() => {
         if(trip.name === "Honeymoon to Greece"){
@@ -67,47 +69,18 @@ const MapScreen = ({route}) => {
             />
         })
     }
+
     
     return (
-        <>
-            <MapView 
-                style={{flex: 1}}
-                region={region}
-                provider={PROVIDER_GOOGLE}
-            >
-                {createMarkers()}
-                {activityMarkers()}
-                {transportationMarkers()}
-            </MapView>
-            {/* <View style={{position: 'absolute', width: 415}}>
-                <GooglePlacesAutocomplete 
-                    placeholder='Search'
-                    onPress={(data, details=null) => {
-                        console.log(data, details)
-                    }}
-                    query={{
-                        key: GOOGLE_PLACES_API_KEY,
-                        language: 'en',
-                        location: `latitude=${region.latitude},longitude=${region.longitude}`,
-                        radius: '100,000'
-                    }}
-                    styles={{
-                        textInputContainer: {
-                          backgroundColor: 'rgba(0,0,0,0)',
-                          borderTopWidth: 0,
-                          borderBottomWidth: 0,
-                        },
-                        textInput: {
-                          marginLeft: 0,
-                          marginRight: 0,
-                          height: 38,
-                          color: '#5d5d5d',
-                          fontSize: 18,
-                        },
-                    }}
-                />
-            </View> */}
-        </>
+        <MapView 
+            style={{flex: 1}}
+            region={region}
+            provider={PROVIDER_GOOGLE}
+        >
+            {createMarkers()}
+            {activityMarkers()}
+            {transportationMarkers()}
+        </MapView>
     );
 }
 

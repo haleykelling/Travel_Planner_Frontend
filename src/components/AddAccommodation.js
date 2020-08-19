@@ -1,26 +1,46 @@
 import React, { useState } from 'react';
-import {TouchableOpacity, View, Text, TextInput, Picker, StyleSheet} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import {TouchableOpacity, View, Text, TextInput, StyleSheet} from 'react-native';
+import FormatDays from '../helpers/FormatDays';
+import CustomMultiPicker from "react-native-multiple-select-list";
 
-const AddAccomodation = ({toggleModal, days}) => {
+const AddAccommodation = ({toggleModal, days, addAccommodation}) => {
         
     const [name, setName] = useState('')
     const [address, setAddress] = useState('')
-  
+    const [reservationNumber, setReservationNumber] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [selectedDays, setSelectedDays] = useState([])
     
-    const handleSubmit = () => {
-    
-    }
+    const selectorData = days.map(day => {
+        return day.date
+    })
 
+    const handleSubmit = () => {
+        const dayIds = FormatDays(selectedDays, days)
+        const formData = {
+            day_ids: dayIds,
+            name: name,
+            address: address,
+            reservation_number: reservationNumber,
+            phone_number: phoneNumber
+        }
+        addAccommodation(formData)
+        toggleModal()
+    }
 
     const handleClose = () =>{
          toggleModal()
     }
 
+    const handleSelectChange = (selectedItem) => {
+        const newArray = selectedItem.slice(1)
+        setSelectedDays(newArray)
+    }
+
 
     return (
         <View>
-            <Text style={styles.headingStyle}>Add an Accomodation</Text>
+            <Text style={styles.headingStyle}>Add an Accommodation</Text>
             <TextInput 
                 style={styles.inputStyle} 
                 placeholder="Name"
@@ -33,9 +53,37 @@ const AddAccomodation = ({toggleModal, days}) => {
                 value={address}
                 onChangeText={setAddress}
                 />
+            <TextInput 
+                style={styles.inputStyle} 
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                />
+            <TextInput 
+                style={styles.inputStyle} 
+                placeholder="Reservation Number"
+                value={reservationNumber}
+                onChangeText={setReservationNumber}
+                />
+            <CustomMultiPicker
+                options={selectorData}
+                search={false} 
+                multiple={true} 
+                key={"label"}
+                returnValue={"label"}
+                callback={handleSelectChange}
+                rowBackgroundColor={"#eee"}
+                rowHeight={45}
+                rowRadius={5}
+                iconColor={"hsl(215, 30%, 40%)"}
+                iconSize={36}
+                selectedIconName={"ios-checkmark"}
+                scrollViewHeight={300}
+                selected={[1]}
+            />
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeButton} onPress={handleSubmit}>
-                    <Text style={styles.closeText}>Create</Text>
+                    <Text style={styles.closeText}>Submit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
                     <Text style={styles.closeText}>Exit</Text>
@@ -56,11 +104,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: 'hsl(215, 90%, 20%)',
         fontFamily: 'Raleway_400Regular'
-    },
-    pickerStyle: {
-        fontSize: 24,
-        color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'Raleway_400Regular',
     },
     inputStyle: {
         fontSize: 24,
@@ -111,4 +154,4 @@ const styles = StyleSheet.create({
 })
     
 
-export default AddAccomodation;
+export default AddAccommodation;

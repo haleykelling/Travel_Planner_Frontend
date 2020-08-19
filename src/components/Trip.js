@@ -11,8 +11,10 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
     
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 
+    const previousTrip = new Date(trip.end_date) < new Date()
+
     return (
-        <View  style={styles.tripItemStyle} >
+        <View style={previousTrip ? styles.previousTrip : styles.tripItemStyle} >
             <TouchableOpacity 
                 onPress={() => navigation.navigate('Itinerary', {trip: trip})}
             >
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: 'hsl(215, 62%, 90%)',
-        marginVertical: 15,
+        marginTop: 40,
         marginHorizontal: 30,
         height: 85,
         borderRadius: 5,
@@ -62,6 +64,20 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2},
         shadowRadius: 5,
         shadowOpacity: 0.5,
+    },
+    previousTrip: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'hsl(215, 40%, 75%)',
+        marginTop: 40,
+        marginHorizontal: 30,
+        height: 85,
+        borderRadius: 5,
+        shadowColor: 'hsl(0, 0%, 20%)',
+        shadowOffset: {width: 2, height: 2},
+        shadowRadius: 5,
+        shadowOpacity: 0.6,
     },
     buttonContainer: {
         flexDirection: 'column',

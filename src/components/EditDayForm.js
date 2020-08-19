@@ -34,7 +34,6 @@ const EditDayForm = ({toggleModal, editDay, dayId}) => {
                 onChangeText={setEndCity}
                 autoCorrect={false}
             ></TextInput>
-            {/* {alerts !== '' ? <Text style={styles.alertStyle}>{alerts}</Text> : null} */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.buttonStyle} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Submit</Text>

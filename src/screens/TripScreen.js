@@ -25,6 +25,11 @@ const TripScreen = ({navigation, tokenValue}) => {
             .then(setTrips)
     }, [])
 
+    const organizeTrips = () => {
+        return trips.sort((a, b) => {
+            return new Date(b.end_date) - new Date(a.start_date)
+        })
+    }
 
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 
@@ -82,10 +87,9 @@ const TripScreen = ({navigation, tokenValue}) => {
 
     return (
         <>
-            <Text style={styles.headingStyle}>Upcoming Trips</Text>
             {trips ?
             <FlatList 
-                data={trips}
+                data={organizeTrips()}
                 renderItem={({item}) => {
                     return <Trip 
                         trip={item} 

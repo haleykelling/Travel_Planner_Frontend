@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {TouchableOpacity, View, Text, TextInput, Picker, StyleSheet} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 const AddComment = ({toggleModal, day, addComment}) => {
         
@@ -11,11 +10,9 @@ const AddComment = ({toggleModal, day, addComment}) => {
         toggleModal()
     }
 
-
     const handleClose = () =>{
          toggleModal()
     }
-
 
     return (
         <View>

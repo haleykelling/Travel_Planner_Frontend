@@ -3,27 +3,29 @@ import { Text, StyleSheet, View, TouchableOpacity, Button, FlatList, SectionList
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import Event from '../components/Event';
+import Accommodation from '../components/Accommodation';
 import AddEventForm from '../components/AddEventForm';
-import AddAccomodation from '../components/AddAccomodation';
+import AddAccommodation from '../components/AddAccommodation';
 
 const activitiesUrl = 'https://stormy-fjord-63158.herokuapp.com/activities'
 const transportationsUrl = 'https://stormy-fjord-63158.herokuapp.com/transportations'
 const dayTransportationsUrl = 'https://stormy-fjord-63158.herokuapp.com/day_transportations'
+const accommodationsUrl = 'https://stormy-fjord-63158.herokuapp.com/accomodations'
 
 const DayScreen = ({route, navigation}) => {
-    const {day} = route.params
+    const {day, trip} = route.params
     
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const [accomodationsModal, setAccomodationsModal] = useState(false)
+    const [accommodationsModal, setAccommodationsModal] = useState(false)
     const [showActivities, setShowActivities] = useState(true)
     const [showTransportations, setShowTransportations] = useState(false)
-    const [showAccomodations, setShowAccomodations] = useState(false)
+    const [showAccommodations, setShowAccommodations] = useState(false)
     const [activities, setActivities] = useState(day.activities)
     const [transportations, setTransportations] = useState(day.transportations)
-    const [accomodations, setAccomodations] = useState(day.accomodations)
+    const [accommodations, setAccommodations] = useState(day.accomodations)
     
     const toggleModal = () => setIsModalVisible(!isModalVisible)
-    const toggleAccomodationsModal = () => setAccomodationsModal(!accomodationsModal)
+    const toggleAccommodationsModal = () => setAccommodationsModal(!accommodationsModal)
 
     const activitiesSorted = () => {
         return activities.sort((a, b) => a.start_time - b.start_time)
@@ -35,17 +37,17 @@ const DayScreen = ({route, navigation}) => {
     const handleActivities = () => {
         setShowActivities(true)
         setShowTransportations(false)
-        setShowAccomodations(false)
+        setShowAccommodations(false)
     }
     const handleTransportations = () => {
         setShowActivities(false)
         setShowTransportations(true)
-        setShowAccomodations(false)
+        setShowAccommodations(false)
     }
-    const handleAccomodations = () => {
+    const handleAccommodations = () => {
         setShowActivities(false)
         setShowTransportations(false)
-        setShowAccomodations(true)
+        setShowAccommodations(true)
     }
 
     const updateBackButton = (activity, deleteActivity) => {
@@ -55,6 +57,7 @@ const DayScreen = ({route, navigation}) => {
                     return <Button title="Itinerary" onPress={() => (
                         navigation.navigate('Itinerary', {
                             activityToDelete: activity,
+                            dayId: day.id
                         }))}
                     />
                 }
@@ -138,6 +141,18 @@ const DayScreen = ({route, navigation}) => {
         })
     }
 
+    const addAccommodation = (accommodation) => {
+        fetch(accommodationsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(accommodation)
+        })
+        .then(response => response.json())
+        .then(result => setAccommodations([...accommodations, result]))
+    }
+
     
     return (
         <>
@@ -154,13 +169,14 @@ const DayScreen = ({route, navigation}) => {
                 />
             </Modal>
             <Modal
-                isVisible={accomodationsModal}
+                isVisible={accommodationsModal}
                 backdropColor='white'
                 backdropOpacity={0.9}
             >
-                <AddAccomodation 
-                    toggleModal={toggleAccomodationsModal}
-                    day={day}
+                <AddAccommodation 
+                    toggleModal={toggleAccommodationsModal}
+                    days={trip.days}
+                    addAccommodation={addAccommodation}
                 />
             </Modal>
             <View style={styles.selectorStyles}>
@@ -170,8 +186,8 @@ const DayScreen = ({route, navigation}) => {
                 <TouchableOpacity onPress={handleTransportations}>
                     <Text style={showTransportations ? styles.selectedText : styles.selectorText}>Transportation</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleAccomodations}>
-                    <Text style={showAccomodations ? styles.selectedText : styles.selectorText}>Accomodations</Text>
+                <TouchableOpacity onPress={handleAccommodations}>
+                    <Text style={showAccommodations ? styles.selectedText : styles.selectorText}>Accommodations</Text>
                 </TouchableOpacity>
             </View>
             {showActivities &&
@@ -204,40 +220,28 @@ const DayScreen = ({route, navigation}) => {
                     }}
                 />
             }
-            {showAccomodations &&
+            {showAccommodations &&
                 <FlatList
-                    data={accomodations}
+                    data={accommodations}
                     keyExtractor={(event) => event.id.toString()}
-                    renderItem={({item}) => <Event event={item} deleteEvent={deleteEvent}/>}
+                    renderItem={({item}) => <Accommodation event={item} deleteEvent={deleteEvent}/>}
                     ListEmptyComponent={() => {
                         return (
                             <>
-                            <Text style={styles.emptyStyle}>No Accomodations Scheduled</Text>
-                            <Text style={styles.emptyStyle}>Click below to add an accomodation!</Text>
+                            <Text style={styles.emptyStyle}>No Accommodations Scheduled</Text>
+                            <Text style={styles.emptyStyle}>Click below to add an accommodation!</Text>
                             </>
                         )
                     }}
                 />
             }
             <View style={styles.buttonContainer}>
-                {showAccomodations &&
-                    <TouchableOpacity onPress={toggleAccomodationsModal} style={styles.buttonStyle}>
-                        <Text style={styles.textStyle}>Accomodation</Text>
-                        <Ionicons style={styles.iconStyle} name="ios-add"  />
-                    </TouchableOpacity>
-                }    
-                {showActivities && 
-                    <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
-                        <Text style={styles.textStyle}>Activity</Text>
-                        <Ionicons style={styles.iconStyle} name="ios-add"  />
-                    </TouchableOpacity>
-                }
-                {showTransportations && 
-                    <TouchableOpacity onPress={toggleModal} style={styles.buttonStyle}>
-                        <Text style={styles.textStyle}>Transportation</Text>
-                        <Ionicons style={styles.iconStyle} name="ios-add"  />
-                    </TouchableOpacity>
-                }
+                <TouchableOpacity onPress={showAccommodations ? toggleAccommodationsModal : toggleModal} style={styles.buttonStyle}>
+                    {showAccommodations && <Text style={styles.textStyle}>Accommodation</Text>}
+                    {showActivities && <Text style={styles.textStyle}>Activity</Text>}
+                    {showTransportations && <Text style={styles.textStyle}>Transportation</Text>}
+                    <Ionicons style={styles.iconStyle} name="ios-add"  />
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Comment', {day: day})} style={styles.commentButtonStyle}>
                     <Text style={styles.textStyle}>Comments</Text>
                 </TouchableOpacity>
@@ -247,14 +251,6 @@ const DayScreen = ({route, navigation}) => {
 }
 
 const styles = StyleSheet.create({
-    headingStyle: {
-        color: 'hsl(215, 30%, 40%)',
-        fontSize: 24,
-        fontFamily: 'Raleway_700Bold',
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: 'white'
-    },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly'
@@ -263,11 +259,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'hsl(215, 30%, 40%)',
-        marginTop: 15,
-        marginBottom: 50,
+        marginTop: 5,
+        marginBottom: 40,
         marginHorizontal: 5,
         height: 70,
-        width: 220,
+        width: 230,
         borderRadius: 5,
         shadowColor: 'hsl(0, 0%, 40%)',
         shadowOffset: {width: 2, height: 2},
@@ -278,8 +274,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: 'hsl(215, 30%, 40%)',
-        marginTop: 15,
-        marginBottom: 50,
+        marginTop: 5,
+        marginBottom: 40,
         marginHorizontal: 5,
         height: 70,
         width: 155,
@@ -292,7 +288,7 @@ const styles = StyleSheet.create({
     iconStyle: {
         fontSize: 30,
         color: 'white',
-        marginTop: 18,
+        marginTop: 19,
         marginRight: 15,
     },
     textStyle: {
@@ -311,14 +307,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     selectorText: {
-        color: 'white',
+        color: 'hsl(0, 0%, 80%)',
         fontFamily: 'Raleway_700Bold',
         fontSize: 16
     },
     selectedText: {
         color: 'white',
         fontFamily: 'Raleway_700Bold',
-        fontSize: 20,
+        fontSize: 23,
     },
     emptyStyle: {
         fontFamily: 'Raleway_400Regular',
