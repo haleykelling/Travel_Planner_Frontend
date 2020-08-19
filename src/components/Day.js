@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet} from 'react-native';
+import { styles } from '../styles/Itinerary';
 import Modal from 'react-native-modal';
 import {FontAwesome} from '@expo/vector-icons';
 import FormatTime from '../helpers/FormatTime';
@@ -18,7 +19,7 @@ const Day = ({day, index, trip, navigation, editDay}) => {
 
     return (
         <View >
-            <Text style={styles.headingStyle}>
+            <Text style={styles.dayHeadingStyle}>
                 Day Number {index + 1} - {new Date(`${day.date}T12:00:00`).toDateString()}
             </Text>
             <TouchableOpacity 
@@ -61,7 +62,7 @@ const Day = ({day, index, trip, navigation, editDay}) => {
                                     </Text>
                                 )    
                             }}
-                            keyExtractor={item => item.id.toString()}
+                            keyExtractor={item => `${item.type_of_activity}${item.id}`}
                         />
                     }
                 </View>
@@ -83,62 +84,5 @@ const Day = ({day, index, trip, navigation, editDay}) => {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    dayStyle: {
-        marginHorizontal: 10,
-        marginVertical: 10,
-        height: 300,
-        backgroundColor: 'hsl(215, 62%, 90%)',
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.5,
-        flexDirection: 'row',
-    },
-    headingStyle: {
-        fontSize: 20,
-        alignSelf: 'center',
-        marginTop: 15,
-        fontFamily: 'Raleway_700Bold',
-        color: 'hsl(215, 90%, 20%)',
-    },
-    cityHeadingStyle: {
-        fontSize: 18,
-        marginVertical: 10,
-        marginRight: 10,
-        fontFamily: 'Raleway_700Bold',
-        color: 'hsl(215, 90%, 20%)',
-    },
-    cityHeadingContainer: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent: 'space-between',
-        width: 210
-    },
-    infoStyle: {
-        flex: 3,
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-    },
-    imageStyle: {
-        flex: 1,
-        width: 150,
-        borderBottomRightRadius: 5,
-        borderTopRightRadius: 5,
-    },
-    infoText: {
-        fontFamily: 'Raleway_400Regular',
-        color: 'hsl(215, 90%, 20%)',
-        fontSize: 16,
-        lineHeight: 20,
-        marginVertical: 10
-    },
-    iconStyle: {
-        fontSize: 20,
-        color: 'hsl(215, 30%, 40%)'
-    }
-})
 
 export default Day;

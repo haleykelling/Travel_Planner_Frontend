@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Text, View, ScrollView, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { Text, FlatList, TouchableOpacity } from 'react-native';
+import { styles } from '../styles/Trip'
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -121,47 +121,5 @@ const TripScreen = ({navigation, tokenValue}) => {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    headingStyle: {
-        textAlign: 'center',
-        fontSize: 24,
-        marginVertical: 10,
-        color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'Raleway_700Bold'
-    },
-    textStyle: {
-        fontSize: 22,
-        alignSelf: 'center',
-        marginLeft: 30,
-        color: 'white',
-        fontFamily: 'Raleway_700Bold'
-    },
-    buttonStyle: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: 'hsl(215, 30%, 40%)',
-        marginTop: 15,
-        marginBottom: 50,
-        marginHorizontal: 30,
-        height: 85,
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.8,
-    },
-    iconStyle: {
-        fontSize: 30,
-        color: 'white',
-        marginTop: 27,
-        marginRight: 30
-    },
-    modalStyles: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center', 
-    },
-})
 
 export default TripScreen;

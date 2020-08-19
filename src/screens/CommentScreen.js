@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, FlatList, TouchableOpacity } from 'react-native';
+import { styles } from '../styles/Comment'
 import Comment from '../components/Comment';
 import Modal from 'react-native-modal';
 import AddComment from '../components/AddComment'
@@ -40,11 +41,10 @@ const CommentScreen = ({route}) => {
                     day={day}
                 />
             </Modal>
-            <TouchableOpacity style={styles.buttonStyle} onPress={toggleShowAddComment}>
-                <Text style={styles.buttonText}>Add Comment</Text>
+            <TouchableOpacity style={styles.addCommentButtonStyle} onPress={toggleShowAddComment}>
+                <Text style={styles.addCommentButtonText}>Add Comment</Text>
             </TouchableOpacity>
             <FlatList 
-                style={styles.listStyle}
                 data={comments}
                 renderItem={({item}) => {
                     return <Comment 
@@ -57,24 +57,5 @@ const CommentScreen = ({route}) => {
     );
 }
 
-const styles = StyleSheet.create({
-    buttonStyle: {
-        backgroundColor: 'hsl(215, 62%, 90%)',
-        marginVertical: 15,
-        padding: 12,
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 1, height: 2},
-        shadowRadius: 3,
-        shadowOpacity: 0.5,
-        alignSelf: 'center'
-    },
-    buttonText: {
-        color: 'hsl(215, 30%, 40%)',
-        fontSize: 20,
-        textAlign: 'center',
-        fontFamily: 'Raleway_700Bold'
-    }
-})
 
 export default CommentScreen;

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, Button, FlatList } from 'react-native';
+import { styles } from '../styles/Itinerary';
 import Day from '../components/Day';
 
 
@@ -99,15 +100,5 @@ const ItineraryScreen = ({route, navigation}) => {
         </>
     );    
 }
-
-const styles = StyleSheet.create({
-    headingStyle: {
-        textAlign: 'center',
-        fontSize: 24,
-        fontFamily: 'Raleway_700Bold',
-        color: 'hsl(215, 90%, 20%)',
-        marginVertical: 10
-    }
-})
 
 export default ItineraryScreen;

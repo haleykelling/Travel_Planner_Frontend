@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, Button, FlatList, SectionList} from 'react-native';
+import React, {useState} from 'react';
+import { Text, View, TouchableOpacity, Button, FlatList } from 'react-native';
+import { styles } from '../styles/Day'
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import Event from '../components/Event';
@@ -236,93 +237,18 @@ const DayScreen = ({route, navigation}) => {
                 />
             }
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={showAccommodations ? toggleAccommodationsModal : toggleModal} style={styles.buttonStyle}>
-                    {showAccommodations && <Text style={styles.textStyle}>Accommodation</Text>}
-                    {showActivities && <Text style={styles.textStyle}>Activity</Text>}
-                    {showTransportations && <Text style={styles.textStyle}>Transportation</Text>}
-                    <Ionicons style={styles.iconStyle} name="ios-add"  />
+                <TouchableOpacity onPress={showAccommodations ? toggleAccommodationsModal : toggleModal} style={styles.addButtonStyle}>
+                    {showAccommodations && <Text style={styles.addTextStyle}>Accommodation</Text>}
+                    {showActivities && <Text style={styles.addTextStyle}>Activity</Text>}
+                    {showTransportations && <Text style={styles.addTextStyle}>Transportation</Text>}
+                    <Ionicons style={styles.addIconStyle} name="ios-add"  />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Comment', {day: day})} style={styles.commentButtonStyle}>
-                    <Text style={styles.textStyle}>Comments</Text>
+                    <Text style={styles.addTextStyle}>Comments</Text>
                 </TouchableOpacity>
             </View>
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly'
-    },
-    buttonStyle: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: 'hsl(215, 30%, 40%)',
-        marginTop: 5,
-        marginBottom: 40,
-        marginHorizontal: 5,
-        height: 70,
-        width: 230,
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.8,
-    },
-    commentButtonStyle: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: 'hsl(215, 30%, 40%)',
-        marginTop: 5,
-        marginBottom: 40,
-        marginHorizontal: 5,
-        height: 70,
-        width: 155,
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.8,
-    },
-    iconStyle: {
-        fontSize: 30,
-        color: 'white',
-        marginTop: 19,
-        marginRight: 15,
-    },
-    textStyle: {
-        fontSize: 22,
-        alignSelf: 'center',
-        marginLeft: 20,
-        color: 'white',
-        fontFamily: 'Raleway_700Bold'
-    },
-    selectorStyles: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        backgroundColor: 'hsl(215, 30%, 40%)',
-        paddingVertical: 15,
-        marginBottom: 15,
-        alignItems: 'center'
-    },
-    selectorText: {
-        color: 'hsl(0, 0%, 80%)',
-        fontFamily: 'Raleway_700Bold',
-        fontSize: 16
-    },
-    selectedText: {
-        color: 'white',
-        fontFamily: 'Raleway_700Bold',
-        fontSize: 23,
-    },
-    emptyStyle: {
-        fontFamily: 'Raleway_400Regular',
-        fontSize: 20,
-        color: 'hsl(0, 0%, 50%)',
-        textAlign: 'center',
-        marginTop: 50
-    }
-})
 
 export default DayScreen;

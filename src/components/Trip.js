@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { styles } from '../styles/Trip';
 import Modal from 'react-native-modal';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import EditTripForm from './EditTripForm'
@@ -8,7 +9,6 @@ import EditTripForm from './EditTripForm'
 const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
     
     const [isModalVisible, setIsModalVisible] = useState(false)
-    
     const toggleModal = () => setIsModalVisible(!isModalVisible)
 
     const previousTrip = new Date(trip.end_date) < new Date()
@@ -18,7 +18,7 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
             <TouchableOpacity 
                 onPress={() => navigation.navigate('Itinerary', {trip: trip})}
             >
-                <Text style={styles.textStyle}>{trip.name}</Text>
+                <Text style={styles.tripTextStyle}>{trip.name}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={toggleModal}>
@@ -43,53 +43,5 @@ const Trip = ({trip, navigation, editTrip, deleteTrip}) => {
     );
 }
 
-const styles = StyleSheet.create({
-    textStyle: {
-        fontSize: 22,
-        marginHorizontal: 30,
-        alignSelf: 'center',
-        color: 'hsl(215, 90%, 20%)',
-        fontFamily: 'Raleway_400Regular'
-    },
-    tripItemStyle: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'hsl(215, 62%, 90%)',
-        marginTop: 40,
-        marginHorizontal: 30,
-        height: 85,
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 40%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.5,
-    },
-    previousTrip: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'hsl(215, 40%, 75%)',
-        marginTop: 40,
-        marginHorizontal: 30,
-        height: 85,
-        borderRadius: 5,
-        shadowColor: 'hsl(0, 0%, 20%)',
-        shadowOffset: {width: 2, height: 2},
-        shadowRadius: 5,
-        shadowOpacity: 0.6,
-    },
-    buttonContainer: {
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        height: 85,
-        marginRight: 8
-    },
-    modalStyles: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center', 
-    },
-})
 
 export default Trip;
