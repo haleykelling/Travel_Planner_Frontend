@@ -11,6 +11,8 @@ Your personal travel companion!
 * [Status](#status)
 * [Contact](#contact)
 
+## Link to Backend Git Repository
+[Wanderlust Backend Repository](https://github.com/haleykelling/Travel_Planner_Backend)
 
 ## General Info
 Wanderlust is a mobile app that was created to help you plan and organize your future travel. You can generate a blank itinerary by creating a trip with starting and ending dates. From there you can add various activities, transportation, and accommodations to keep everything organized in one location. You can add additional activities and notes while you are travelling so you will never forget the name of that hole in the wall restaurant you happened upon or the time you almost missed the sighting of two baby black bears and their mother. Once you are back from your trip you will always have a way to look back and remember all of those fond memories.
