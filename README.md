@@ -11,6 +11,8 @@ Your personal travel companion!
 * [Status](#status)
 * [Contact](#contact)
 
+## Link to Backend Git Repository
+[Wanderlust Backend Repository](https://github.com/haleykelling/Travel_Planner_Backend)
 
 ## General Info
 Wanderlust is a mobile app that was created to help you plan and organize your future travel. You can generate a blank itinerary by creating a trip with starting and ending dates. From there you can add various activities, transportation, and accommodations to keep everything organized in one location. You can add additional activities and notes while you are travelling so you will never forget the name of that hole in the wall restaurant you happened upon or the time you almost missed the sighting of two baby black bears and their mother. Once you are back from your trip you will always have a way to look back and remember all of those fond memories.
@@ -21,7 +23,7 @@ I grew up with a love for travel and was able to spend a month travelling Europe
 ## Demonstration Video
 [Wanderlust Youtube Demonstration](https://youtu.be/ua200teEPl8)
 
-## Technologies 
+## Backend and Frontend Technologies 
 * Ruby - version 2.6.1
 * Rails - version 6.0.3, >= 6.0.3.2
 * PostgreSQL
@@ -67,7 +69,7 @@ Current Features:
 * Accommodations can be added to multiple days at once
 * View all relevant information for activities, transportation, and accommodations in the detailed day view
 * When a new location is added to days or a specific event, geolocation is obtained from Google's geolocation API and sent to the frontend to be placed on the map
-* Map screen shows all locations plotted with ability to zoom and click on a point of interest
+* Map screen utilizes Google Maps to show all locations plotted with ability to zoom and click on a point of interest
 * Comments screen can be accessed from the detailed day view to add or view comments for that day
 * All screens are able to sort by date or time, depending on the information available
 
@@ -77,7 +79,7 @@ Technical Accomplishments:
 * I incorporated multiple libraries that were compatible with React-Native and Expo's managed workflow
 
 Future Features:
-* Better integration with google maps to allow for searching and adding events from map screen
+* Better integration with Google maps to allow for searching and adding events from map screen
 * Add ability to upload photos and store them on a cloud service linked to the specific trip
 * Add feature to be able to choose pictures to display on your itinerary cards
 * Add friends and share trips and images with friends
