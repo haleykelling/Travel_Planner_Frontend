@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import { styles } from '../styles/Home'
-import { AsyncStorage } from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 const signupUrl = 'https://stormy-fjord-63158.herokuapp.com/users'
 
-const SignupForm = ({toggleForm}, setToken, setTokenValue) => {
+const SignupForm = ({toggleForm, setToken, setTokenValue}) => {
     
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')

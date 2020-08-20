@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'hsl(215, 30%, 40%)',
         paddingVertical: 15,
         marginBottom: 15,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     selectorText: {
         color: 'hsl(0, 0%, 80%)',
