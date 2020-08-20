@@ -1,18 +1,15 @@
 # Wanderlust
 Your personal travel companion!
 
-
 ## Table of Contents
 * [General Info](#general-info)
 * [Inspiration](#inspiration)
 * [Demonstration Video](#demonstration-video)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Example Code](#example-code)
 * [Features](#features)
 * [Status](#status)
 * [Contact](#contact)
-* [License](#license)
 
 
 ## General Info
@@ -22,7 +19,7 @@ Wanderlust is a mobile app that was created to help you plan and organize your f
 I grew up with a love for travel and was able to spend a month travelling Europe with my husband and family a couple years ago. I would have loved to have Wanderlust with me to remember all the places and things that happened while I was there that are quickly slipping from my memory. Nowadays we always have our phone with us and it would be so easy to take it out and write down a quick story so you have it forever. 
 
 ## Demonstration Video
-[Wanderlust Youtube Demonstration]()
+[Wanderlust Youtube Demonstration](https://youtu.be/ua200teEPl8)
 
 ## Technologies 
 * Ruby - version 2.6.1
@@ -54,13 +51,10 @@ This will open up the Expo dev tools in your browser where you can select if you
 
 You can create a new user on the sign in page and start planning your own trips!
 
-## Example Code
-```javascript
-   
-```
 
 ## Challenges
 My previous experience was with web development using vanilla Javascript and React, but this was my first time developing a native mobile app. I used Expo's managed workflow to get the project started, which was extremely helpful but it also presented some challenges with using libraries and other technologies. I found it difficult to find libraries that did exactly what I needed that were also compatible with Expo. Being new to the world of mobile development, I know I have only scratched the surface of understanding all of the intricacies and capabilities and I look forward to learning more in the future.
+
 
 ## Features
 Current Features:
